@@ -74,3 +74,9 @@ def get_movie(request):
     return Response(serializer.data)
     
 
+@api_view(['GET'])
+def print_movie(request):
+    # 데이터를 반환해주는 부분
+    movie_list = Movie.objects.all()
+    serializer = MovieSerializer(movie_list, many=True)
+    return Response(serializer.data)
