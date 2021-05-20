@@ -57,7 +57,6 @@ def get_movie(request):
         movie = Movie()
         movie.title = movie_item['title']
         movie.release_date = movie_item['release_date']
-        movie.popularity = movie_item['popularity']
         movie.vote_count = movie_item['vote_count']
         movie.vote_average = movie_item['vote_average']
         movie.overview = movie_item['overview']
