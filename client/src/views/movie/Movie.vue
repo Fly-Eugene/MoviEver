@@ -1,16 +1,19 @@
 <template>
   <div>
-    {{ getMovie }}
+    <ul>
+      {{ movie_list }}
+    </ul>
+    
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Movie',
   computed: {
-    ...mapGetters(['getMovie'])
+    ...mapState(['movie_list'])
   }
 }
 </script>
