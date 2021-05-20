@@ -35,7 +35,9 @@ INSTALLED_APPS = [
     'movies',
     'accounts',
     'freeboard',
+    
     # 3rd party apps
+    'rest_framework',
 
     # django apps
     'django.contrib.admin',

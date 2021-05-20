@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Genre(models.Model):
+    idx = models.IntegerField()
     name = models.CharField(max_length=50)
 
 class Movie(models.Model):
