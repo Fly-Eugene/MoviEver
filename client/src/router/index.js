@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
+// 현재, Home, 회원가입, 로그인 라우터 생성했습니다.
 import Home from '../views/Home.vue'
+import Signup from '@/views/accounts/Signup'
+import Login from '@/views/accounts/Login'
 
 Vue.use(VueRouter)
 
@@ -10,6 +14,16 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  {
+    path: '/accounts/signup',
+    name: 'Signup',
+    component: Signup,
+  },
+  {
+    path: '/accounts/login',
+    name: 'Login',
+    component: Login
+  }
   
 ]
 
