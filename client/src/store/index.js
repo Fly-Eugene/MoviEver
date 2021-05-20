@@ -7,9 +7,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    movie_list: [],
   },
   mutations: {
-
+    GET_MOVIE: function(state, res) {
+      state.movie_list = res
+    }
   },
   actions: {
     // actions에서 무조건 기본인자로 context 적어주기, 사용 안해도 된다.
@@ -54,23 +57,23 @@ export default new Vuex.Store({
     logout: function () {
       localStorage.removeItem('jwt')
       router.push({ name: 'Home' })
-    }  
+    },
 
-  },
-  getters: {
-    getMovie: function () {
+    getMovie: function ({commit}) {
       axios({
         method: 'get',
         url: 'http://127.0.0.1:8000/movies/print_movie/',
       })
       .then(res => {
-        console.log(res)
-        return res
+        commit('GET_MOVIE', res)
       })
       .catch(err => {
         console.log(err)
       })
     }
+  },
+  getters: {
+    
   },
   modules: {
   }
