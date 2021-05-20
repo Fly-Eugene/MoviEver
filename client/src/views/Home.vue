@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-
+    <p>여기가 메인 페이지 입니다</p>
   </div>
 </template>
 
@@ -14,3 +14,7 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+</style>
