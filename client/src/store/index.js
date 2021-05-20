@@ -57,6 +57,21 @@ export default new Vuex.Store({
     }  
 
   },
+  getters: {
+    getMovie: function () {
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/movies/print_movie/',
+      })
+      .then(res => {
+        console.log(res)
+        return res
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+  },
   modules: {
   }
 })

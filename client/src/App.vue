@@ -21,7 +21,10 @@
               <router-link :to="{ name: 'Login' }">Login</router-link> |
             </li>
             <li class="nav-item">
-              <router-link @click.native="$store.dispatch('logout')" to='#'>Logout</router-link>
+              <router-link @click.native="$store.dispatch('logout')" to='#'>Logout</router-link> |
+            </li>
+            <li class="nav-item">
+              <router-link :to="{ name: 'Movie' }">Movie</router-link> |
             </li>
           </ul>
         </div>
