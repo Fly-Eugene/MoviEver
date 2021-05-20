@@ -56,5 +56,8 @@
   color: #42b983;
 }
 
+.navbar {
+  background-color: #262223;
+}
 
 </style>
