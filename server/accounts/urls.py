@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('signup/', views.signup),
+    path('like-movie/', views.like_movie),
     path('api-token-auth/', obtain_jwt_token),
 ]
 
