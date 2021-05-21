@@ -7,11 +7,18 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    // server_url을 변수로 저장했습니다.
+    server_url: 'http://127.0.0.1:8000/',
     movie_list: [],
+    review_list: [],
   },
   mutations: {
     GET_MOVIE: function(state, res) {
       state.movie_list = res['data']
+    },
+
+    CREATE_REVIEW: function(state, res) {
+      state.review_list.push(res)
     }
   },
   actions: {
@@ -20,12 +27,12 @@ export default new Vuex.Store({
     signup: function (context, credentials) {
       axios({
         method: 'post',
-        url: 'http://127.0.0.1:8000/accounts/signup/',
+        url: this.state.server_url + 'accounts/signup/',
         data: credentials,
       })
         .then(res => {
           console.log(res)
-          // this.$router.push({ name: 'Login' })
+          router.push({ name: 'Login' })
         })
         .catch(err => {
           console.log(err)
@@ -37,7 +44,7 @@ export default new Vuex.Store({
     login: function (context, credentials) {
       axios({
         method: 'post',
-        url: 'http://127.0.0.1:8000/accounts/api-token-auth/',
+        url: this.state.server_url + 'accounts/api-token-auth/',
         data: credentials,
       })
         .then(res => {
@@ -62,7 +69,7 @@ export default new Vuex.Store({
     getMovie: function ({commit}) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/movies/print_movie/',
+        url: this.state.server_url + 'movies/print_movie/',
       })
       .then(res => {
         commit('GET_MOVIE', res)
@@ -70,7 +77,23 @@ export default new Vuex.Store({
       .catch(err => {
         console.log(err)
       })
+    },
+
+    createReview: function({commit}, review) {
+      axios({
+        method: 'post',
+        url: this.state.server_url + 'freeboard/',
+        data: review
+      })
+      .then(res => {
+        console.log(res)
+        commit('CREATE_REVIEW', res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
     }
+
   },
   getters: {
     

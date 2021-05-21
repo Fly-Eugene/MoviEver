@@ -7,6 +7,8 @@ import Signup from '@/views/accounts/Signup'
 import Login from '@/views/accounts/Login'
 import Movie from '@/views/movie/Movie'
 import MovieInfo from '@/views/movie/MovieInfo'
+import FreeBoard from '@/views/Board/FreeBoard'
+import FreeBoardCreate from '@/views/Board/FreeBoardCreate'
 
 Vue.use(VueRouter)
 
@@ -40,6 +42,18 @@ const routes = [
     component: MovieInfo,
     props:true
   },
+  // 자유게시판 목록들을 보여주는 라우터
+  {
+    path: '/Board/freeboard',
+    name: 'FreeBoard',
+    component: FreeBoard,
+  },
+  // 자유게시판 새로운 게시물 생성 라우터
+  {
+    path: '/Board/freeboard/create',
+    name: 'FreeBoardCreate',
+    component: FreeBoardCreate,
+  }
 ]
 
 const router = new VueRouter({
