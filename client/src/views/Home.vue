@@ -31,7 +31,7 @@
     <div class="swiper-button-prev outer-arrow" role="button">
       <i class="fas fa-chevron-left fa-3x"></i>
     </div>
-    <div class="swiper-button-next outer-arrow" role="button">
+    <div class="swiper-button-next outer-arrow" role="button" @click="onBoard">
       <i class="fas fa-chevron-right fa-3x"></i>
     </div>
     <div class="swiper-button-down" @click="onMovieDetail">
@@ -64,6 +64,9 @@ export default {
   methods: {
     onMovieDetail: function(){
       this.$router.push({name: 'Movie'})
+    },
+    onBoard: function() {
+      this.$router.push({name: 'FreeBoard'})
     }
   }
 }
