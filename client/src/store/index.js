@@ -11,7 +11,7 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_MOVIE: function(state, res) {
-      state.movie_list = res
+      state.movie_list = res['data']
     }
   },
   actions: {
