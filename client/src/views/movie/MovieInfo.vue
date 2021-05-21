@@ -5,6 +5,11 @@
         title: {{ movieInfo.title }}
       </p>
       <p>
+        <label for="rating">평점</label>
+        <input v-model="rating" type="number" id="rating" name="rating" min="1" max="5">
+        <button @click="onClick" class="btn btn-primary">작성</button>
+      </p>
+      <p>
         release_date: {{ movieInfo.release_date }}
       </p>
       <p>
@@ -22,21 +27,18 @@
       <p v-for="genre in movieInfo.genres" :key="genre.id">
         |{{ genre.name }}|
       </p>
-      <div v-b-hover="handleHover" class="border rounded py-3 px-4">
-        <b-icon v-if="isHovered" icon="battery-full" scale="2"></b-icon>
-        <b-icon v-else icon="battery" scale="2"></b-icon>
-        <span class="ml-2" :class="isHovered ? 'text-danger' : ''">Hover this area</span>
-      </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'MovieInfo',
   data: function () {
     return {
       movieInfo: this.movie,
-      isHovered: false
+      rating: 0,
     }
   },
   props: {
@@ -52,8 +54,22 @@ export default {
     }
   },
   methods: {
-    handleHover(hovered) {
-        this.isHovered = hovered
+    onClick: function () {
+      axios({
+        method: 'post',
+        url: 'http://127.0.0.1:8000/accounts/like-movie/',
+        data: {
+          rating: this.rating
+        },
+        headers: {'X-Requested-With': 'XMLHttpRequest',
+        },
+      })
+      .then( res => {
+        console.log(res);
+      })
+      .catch( err => {
+        console.log(err);
+      })
     }
   }
 }
