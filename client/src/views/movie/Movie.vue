@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <!-- {{movie_list['data']}} -->
+    <p>여기는 영화페이지</p>
+    <!-- {{ movie_list }} -->
     <div class="row">
-      <MovieItem v-for="movie in movie_list['data']" :key="movie.id" :movie="movie" />
+      <MovieItem v-for="movie in movie_list" :key="movie.id" :movie="movie" />
     </div>
   </div>
 </template>
