@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+
 
 export default {
   name: 'MovieInfo',
@@ -55,22 +55,12 @@ export default {
   },
   methods: {
     onClick: function () {
-      axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8000/accounts/like-movie/',
-        data: {
-          rating: this.rating,
-          movie: this.movie.id,
-        },
-        headers: {'X-Requested-With': 'XMLHttpRequest',
-        },
-      })
-      .then( res => {
-        console.log(res);
-      })
-      .catch( err => {
-        console.log(err);
-      })
+      const data = {
+        movie: this.movie.id,
+        rating: this.rating
+      }
+      this.$store.dispatch('ratingMovie', data)
+      // this.$store.dispatch('getLikeMovies')
     }
   }
 }

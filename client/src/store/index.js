@@ -80,7 +80,6 @@ export default new Vuex.Store({
       })
     },
 
-    
     createReview: function(context, review) {
       axios({
         method: 'post',
@@ -88,17 +87,48 @@ export default new Vuex.Store({
         data: review,
         headers: this.getters.setToken
 
-        })
-        .then(res => {
-          console.log(res)
-          router.push({ name: 'FreeBoard' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      }
-      
+      })
+      .then(res => {
+        console.log(res)
+        router.push({ name: 'FreeBoard' })
+      })
+      .catch(err => {
+        console.log(err)
+      })
     },
+    ratingMovie: function (context, ratingData) {
+      axios({
+        method: 'post',
+        url: this.state.server_url + 'accounts/like-movie/',
+        data: ratingData,
+        headers: {'X-Requested-With': 'XMLHttpRequest',
+                  ...this.getters.setToken
+        },
+      })
+      .then( res => {
+        console.log(res)
+        // this.actions.getLikeMovies()
+      })
+      .catch( err => {
+        console.log(err)
+      })
+    },
+    getLikeMovies: function () {
+      axios({
+        method: 'get',
+        url: this.state.server_url + 'accounts/like-movie/',
+        headers: {'X-Requested-With': 'XMLHttpRequest',
+                  ...this.getters.setToken
+        },
+      })
+      .then( res => {
+        console.log(res);
+      })
+      .catch( err => {
+        console.log(err);
+      })
+    }    
+  },
     getters: {
       setToken: function() {
         const token = localStorage.getItem('jwt')
