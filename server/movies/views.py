@@ -56,7 +56,10 @@ def get_movie(request):
     for movie_item in raw_movie_list:
         movie = Movie()
         movie.title = movie_item['title']
-        movie.release_date = movie_item['release_date']
+        if movie_item.get('release_date', None) == None:
+            movie.release_date = '1900-01-01'
+        else:
+            movie.release_date = movie_item['release_date']
         movie.vote_count = movie_item['vote_count']
         movie.vote_average = movie_item['vote_average']
         movie.overview = movie_item['overview']
