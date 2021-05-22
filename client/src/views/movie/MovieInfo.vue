@@ -10,6 +10,10 @@
         <button @click="onClick" class="btn btn-primary">작성</button>
       </p>
       <p>
+        <MovieRating :movie='movie'/>
+      </p>
+      
+      <p>
         release_date: {{ movieInfo.release_date }}
       </p>
       <p>
@@ -31,7 +35,7 @@
 </template>
 
 <script>
-
+import MovieRating from '@/views/movie/MovieRating.vue'
 
 export default {
   name: 'MovieInfo',
@@ -39,7 +43,11 @@ export default {
     return {
       movieInfo: this.movie,
       rating: 0,
+      test: 0,
     }
+  },
+  components: {
+    MovieRating,
   },
   props: {
     movie:{
@@ -60,9 +68,8 @@ export default {
         rating: this.rating
       }
       this.$store.dispatch('ratingMovie', data)
-      // this.$store.dispatch('getLikeMovies')
     }
-  }
+  },
 }
 </script>
 

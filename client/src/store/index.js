@@ -11,6 +11,8 @@ export default new Vuex.Store({
     server_url: 'http://127.0.0.1:8000/',
     movie_list: [],
     review_list: [],
+    rated_movie_lst: [],
+    
   },
   mutations: {
     GET_MOVIE: function(state, res) {
@@ -19,7 +21,8 @@ export default new Vuex.Store({
 
     CREATE_REVIEW: function(state, res) {
       state.review_list.push(res)
-    }
+    },
+    
   },
   actions: {
     // actions에서 무조건 기본인자로 context 적어주기, 사용 안해도 된다.
@@ -106,14 +109,17 @@ export default new Vuex.Store({
         },
       })
       .then( res => {
-        console.log(res)
-        // this.actions.getLikeMovies()
+        console.log(res.data)
+        
+        // actions 내에서 actions를 실행하고 싶을 땐 이렇게!
+        context.dispatch('getRatedMovies')
+        
       })
       .catch( err => {
         console.log(err)
       })
     },
-    getLikeMovies: function () {
+    getRatedMovies: function (context) {
       axios({
         method: 'get',
         url: this.state.server_url + 'accounts/like-movie/',
@@ -122,7 +128,8 @@ export default new Vuex.Store({
         },
       })
       .then( res => {
-        console.log(res);
+        context.state.rated_movie_lst = res.data
+        console.log(context.state.rated_movie_lst);
       })
       .catch( err => {
         console.log(err);

@@ -1,7 +1,5 @@
 <template>
   <div class="container">
-    <p>여기는 영화페이지</p>
-    <!-- {{ movie_list }} -->
     <div class="row">
       <MovieItem v-for="movie in movie_list" :key="movie.id" :movie="movie" />
     </div>
