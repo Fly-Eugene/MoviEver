@@ -1,6 +1,7 @@
 from django.db.models import fields
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from .models import LikeMovie
 
 User = get_user_model()
 
@@ -11,3 +12,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+
+class LikeMovieSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = LikeMovie
+        fields = ('__all__')
+        read_only_fields = ('user',)

@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import UserSerializer
+from .serializers import UserSerializer, LikeMovieSerializer
 
 from django.shortcuts import render
 
@@ -32,4 +32,7 @@ def signup(request):
 
 @api_view(['POST'])  
 def like_movie(request):
-    return Response(request.data)
+    serializer = LikeMovieSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=request.user)
+    return Response(serializer.data)

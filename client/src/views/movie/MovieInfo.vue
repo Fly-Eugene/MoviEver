@@ -59,7 +59,8 @@ export default {
         method: 'post',
         url: 'http://127.0.0.1:8000/accounts/like-movie/',
         data: {
-          rating: this.rating
+          rating: this.rating,
+          movie: this.movie.id,
         },
         headers: {'X-Requested-With': 'XMLHttpRequest',
         },
