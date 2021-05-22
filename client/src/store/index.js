@@ -70,6 +70,7 @@ export default new Vuex.Store({
       axios({
         method: 'get',
         url: this.state.server_url + 'movies/print_movie/',
+        headers: this.setToken,
       })
       .then(res => {
         commit('GET_MOVIE', res)
@@ -79,25 +80,34 @@ export default new Vuex.Store({
       })
     },
 
-    createReview: function({commit}, review) {
+    
+    createReview: function(context, review) {
       axios({
         method: 'post',
         url: this.state.server_url + 'freeboard/',
-        data: review
-      })
-      .then(res => {
-        console.log(res)
-        commit('CREATE_REVIEW', res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    }
+        data: review,
+        headers: this.getters.setToken
 
-  },
-  getters: {
-    
-  },
+        })
+        .then(res => {
+          console.log(res)
+          router.push({ name: 'FreeBoard' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+      
+    },
+    getters: {
+      setToken: function() {
+        const token = localStorage.getItem('jwt')
+        const config = {
+          Authorization: `JWT ${token}`
+        }
+        return config
+      }
+    },
   modules: {
   }
 })
