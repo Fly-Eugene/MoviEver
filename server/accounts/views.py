@@ -17,6 +17,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from django_seed import Seed
 import random
+import faker
 
 # Create your views here.
 @api_view(['POST'])
@@ -76,14 +77,13 @@ def cf_algo(request):
     print(movie_user_rating)
     print(item_based_collabor)
 
-    
-    seeder = Seed.seeder()
-    seeder.add_entity(LikeMovie, 100, {
-        'movie': lambda x: random,
-        'user': lambda x: random,
-        'rating': lambda x: random.randint(1, 5)
-    })
-    seeder.execute()
+    # seeder = Seed.seeder()
+    # seeder.add_entity(LikeMovie, 100, {
+    #     'movie': lambda x: seeder.faker.Movie,
+    #     'user': lambda x: random,
+    #     'rating': lambda x: random.randint(1, 5)
+    # })
+    # seeder.execute()
 
 
     return Response(item_based_collabor)

@@ -13,7 +13,7 @@
         <MovieRating :movie='movie'/>
       </p>
       
-      <p>
+      <p class="fs-4">
         release_date: {{ movieInfo.release_date }}
       </p>
       <p>
