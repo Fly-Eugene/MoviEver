@@ -41,6 +41,7 @@ export default {
   created: function () {
     this.$store.dispatch('getMovie')
     this.$store.dispatch('getReviews')
+    this.$store.dispatch('getRatedMovies')
   }
 }
 </script>

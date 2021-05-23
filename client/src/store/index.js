@@ -11,6 +11,8 @@ export default new Vuex.Store({
     server_url: 'http://127.0.0.1:8000/',
     movie_list: [],
     review_list: [],
+    rated_movie_lst: [],
+    
   },
   mutations: {
     GET_MOVIE: function(state, res) {
@@ -19,8 +21,13 @@ export default new Vuex.Store({
 
     GET_REVIEWS: function(state, res) {
       state.review_list = res.data
-    }
+    },
+    
+    CREATE_REVIEW: function(state, res) {
+      state.review_list.push(res)
+    },
   },
+  
   actions: {
     // actions에서 무조건 기본인자로 context 적어주기, 사용 안해도 된다.
     // django에 signup view 가 실행되도록 합니다.
@@ -96,14 +103,12 @@ export default new Vuex.Store({
 
     // },
 
-    
     createReview: function(context, review) {
       axios({
         method: 'post',
         url: this.state.server_url + 'freeboard/',
         data: review,
         headers: this.getters.setToken
-
         })
         .then(res => {
           console.log(res)
@@ -165,9 +170,48 @@ export default new Vuex.Store({
       .catch(err => {
         console.log(err)
       })
-    }
-      
     },
+    
+    ratingMovie: function (context, ratingData) {
+      axios({
+        method: 'post',
+        url: this.state.server_url + 'accounts/like-movie/',
+        data: ratingData,
+        headers: {'X-Requested-With': 'XMLHttpRequest', 
+        ...this.getters.setToken }
+          
+      })
+      .then( res => {
+        console.log(res.data)
+        
+        // actions 내에서 actions를 실행하고 싶을 땐 이렇게!
+        context.dispatch('getRatedMovies')
+        
+      })
+      .catch( err => {
+        console.log(err)
+      })
+    },
+    
+    getRatedMovies: function (context) {
+      axios({
+        method: 'get',
+        url: this.state.server_url + 'accounts/like-movie/',
+        headers: {'X-Requested-With': 'XMLHttpRequest',
+                  ...this.getters.setToken
+        },
+      })
+      .then( res => {
+        context.state.rated_movie_lst = res.data
+        console.log(context.state.rated_movie_lst);
+      })
+      .catch( err => {
+        console.log(err);
+      })
+    },
+    
+  },
+  
     getters: {
       setToken: function() {
         const token = localStorage.getItem('jwt')
@@ -178,6 +222,7 @@ export default new Vuex.Store({
         return config
       }
     },
+    
   modules: {
   }
 })
