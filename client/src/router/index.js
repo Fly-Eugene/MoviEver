@@ -9,6 +9,8 @@ import Movie from '@/views/movie/Movie'
 import MovieInfo from '@/views/movie/MovieInfo'
 import FreeBoard from '@/views/Board/FreeBoard'
 import FreeBoardCreate from '@/views/Board/FreeBoardCreate'
+import FreeBoardDetail from '@/views/Board/FreeBoardItem'
+import FreeBoardUpdate from '@/views/Board/FreeBoardUpdate'
 
 Vue.use(VueRouter)
 
@@ -53,6 +55,20 @@ const routes = [
     path: '/Board/freeboard/create',
     name: 'FreeBoardCreate',
     component: FreeBoardCreate,
+  },
+  // 특정 게시판 상세 정보 라우터
+  {
+    path: '/Board/freeboard/:id',
+    name: 'FreeBoardDetail',
+    component: FreeBoardDetail,
+    props: true
+  },
+  // 특정 게시판 수정 라우터
+  {
+    path: '/Board/freeboard/:id',
+    name: 'FreeBoardUpdate',
+    component: FreeBoardUpdate,
+    props: true
   }
 ]
 

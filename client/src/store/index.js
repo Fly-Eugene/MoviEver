@@ -17,8 +17,8 @@ export default new Vuex.Store({
       state.movie_list = res['data']
     },
 
-    CREATE_REVIEW: function(state, res) {
-      state.review_list.push(res)
+    GET_REVIEWS: function(state, res) {
+      state.review_list = res.data
     }
   },
   actions: {
@@ -80,6 +80,22 @@ export default new Vuex.Store({
       })
     },
 
+    // getComments: function(context, review_id) {
+    //   axios({
+    //     method: 'get',
+    //     url: this.state.server_url + `freeboard/${review_id}/comment/`,
+    //     headers: this.setToken,
+    //   })
+    //   .then(res => {
+    //     console.log(res.data)
+    //     return res.data
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
+
+    // },
+
     
     createReview: function(context, review) {
       axios({
@@ -96,7 +112,60 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
-      }
+      },
+    
+    getReviews: function({commit}) {
+      axios({
+        method: 'get',
+        url: this.state.server_url + 'freeboard/',
+        headers: this.getters.setToken
+      })
+      .then(res => {
+        console.log(res)
+        commit('GET_REVIEWS', res)
+        // this.state.review_list = res.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+    updateReview: function(context, arr) {
+      const [review_id, new_review]= arr
+      // console.log(arr)
+      axios({
+        method: 'put',
+        url: this.state.server_url + `freeboard/${review_id}/`,
+        data: new_review,
+        headers: this.getters.setToken
+      })
+      .then(res => {
+        console.log(res)
+        router.push({ name: 'FreeBoard' })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+    createComment: function(context, arr) {
+      const [review_id, new_comment] = arr
+      console.log(new_comment)
+      axios({
+        method: 'post',
+        url: this.state.server_url + `freeboard/${review_id}/comment/`,
+        data: {content: new_comment},
+        headers: this.getters.setToken
+      })
+      .then(res => {
+        console.log(res)
+        
+        router.push({ name: 'FreeBoardDetail', params: {id: review_id}})
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
       
     },
     getters: {
@@ -105,6 +174,7 @@ export default new Vuex.Store({
         const config = {
           Authorization: `JWT ${token}`
         }
+        console.log(config);
         return config
       }
     },

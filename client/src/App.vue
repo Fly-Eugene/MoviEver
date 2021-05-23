@@ -40,6 +40,7 @@
 export default {
   created: function () {
     this.$store.dispatch('getMovie')
+    this.$store.dispatch('getReviews')
   }
 }
 </script>
