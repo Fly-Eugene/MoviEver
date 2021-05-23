@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # 3rd party apps
     'corsheaders',
     'rest_framework',
+    'django_seed',
 
     # django apps
     'django.contrib.admin',
