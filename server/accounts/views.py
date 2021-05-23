@@ -1,3 +1,4 @@
+from random import random
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -10,6 +11,12 @@ from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
+import numpy as np
+import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+
+from django_seed import Seed
+import random
 
 # Create your views here.
 @api_view(['POST'])
@@ -55,4 +62,31 @@ def like_movie(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def cf_algo(request):
+    like_movie_list = LikeMovie.objects.all()
+    serializer = LikeMovieSerializer(like_movie_list,many=True)
+    df = pd.json_normalize(serializer.data)
+    movie_user_rating = df.pivot_table('rating', index='movie', columns='user')
+    movie_user_rating.fillna(0, inplace=True)
+    item_based_collabor = cosine_similarity(movie_user_rating)
+    item_based_collabor = pd.DataFrame(data = item_based_collabor, index=movie_user_rating.index, columns=movie_user_rating.index)
+    
+    print(df)
+    print(movie_user_rating)
+    print(item_based_collabor)
+
+    
+    seeder = Seed.seeder()
+    seeder.add_entity(LikeMovie, 100, {
+        'movie': lambda x: random,
+        'user': lambda x: random,
+        'rating': lambda x: random.randint(1, 5)
+    })
+    seeder.execute()
+
+
+    return Response(item_based_collabor)
+
+    
 
