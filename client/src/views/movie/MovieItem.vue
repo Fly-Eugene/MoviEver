@@ -28,5 +28,7 @@ export default {
 </script>
 
 <style>
-
+.card {
+  font-family: "Architects Daughter", "Noto Sans KR"
+}
 </style>
