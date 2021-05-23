@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class LikeMovieSerializer(serializers.ModelSerializer):
-
+    # user = UserSerializer(read_only=True)
     class Meta:
         model = LikeMovie
         fields = ('__all__')

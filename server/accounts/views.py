@@ -2,8 +2,14 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import UserSerializer, LikeMovieSerializer
+from .models import LikeMovie
 
 from django.shortcuts import render
+
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+
 
 # Create your views here.
 @api_view(['POST'])
@@ -30,9 +36,23 @@ def signup(request):
 
 
 
-@api_view(['POST'])  
+@api_view(['POST', 'GET'])  
+@authentication_classes([JSONWebTokenAuthentication])       # JWT가 유효한지 체크
+@permission_classes([IsAuthenticated])          # 인증이 되어있는 상태인지 체크
 def like_movie(request):
-    serializer = LikeMovieSerializer(data=request.data)
-    if serializer.is_valid(raise_exception=True):
-        serializer.save(user=request.user)
+    if request.method == 'POST':
+        serializer = LikeMovieSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            if LikeMovie.objects.filter(movie_id=request.data['movie'], user_id=request.user.id).exists():
+                like_movie = LikeMovie.objects.filter(movie_id=request.data['movie'], user_id=request.user.id)[0]
+                like_movie.rating = request.data['rating']
+                like_movie.save()
+            else:
+                serializer.save(user=request.user)
+    else:
+        like_movies = LikeMovie.objects.filter(user_id=request.user.id)
+        serializer = LikeMovieSerializer(like_movies, many=True)
     return Response(serializer.data)
+
+
+

@@ -10,6 +10,10 @@
         <button @click="onClick" class="btn btn-primary">작성</button>
       </p>
       <p>
+        <MovieRating :movie='movie'/>
+      </p>
+      
+      <p>
         release_date: {{ movieInfo.release_date }}
       </p>
       <p>
@@ -31,7 +35,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import MovieRating from '@/views/movie/MovieRating.vue'
 
 export default {
   name: 'MovieInfo',
@@ -39,7 +43,11 @@ export default {
     return {
       movieInfo: this.movie,
       rating: 0,
+      test: 0,
     }
+  },
+  components: {
+    MovieRating,
   },
   props: {
     movie:{
@@ -55,24 +63,13 @@ export default {
   },
   methods: {
     onClick: function () {
-      axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8000/accounts/like-movie/',
-        data: {
-          rating: this.rating,
-          movie: this.movie.id,
-        },
-        headers: {'X-Requested-With': 'XMLHttpRequest',
-        },
-      })
-      .then( res => {
-        console.log(res);
-      })
-      .catch( err => {
-        console.log(err);
-      })
+      const data = {
+        movie: this.movie.id,
+        rating: this.rating
+      }
+      this.$store.dispatch('ratingMovie', data)
     }
-  }
+  },
 }
 </script>
 
