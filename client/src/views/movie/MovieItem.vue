@@ -4,28 +4,6 @@
     <div class="card-body">
       <h5 class="card-title" >{{ movie.title }}</h5>
       <p class="card-text">Movie Average Rate: {{ movie.vote_average }}</p>
-      <!-- 원하는 링크의 이름을 name 키를 통해 전달하고 그 뒤로 params를 통해 동적 라우팅 변수(:id)와 전달할 props(movie)를 함께 넘겨 줍니다! -->
-    
-      
-      <!-- 200개가 생성되어 있다 얘를 for문으로 돌리면 안된다! -->
-      <!-- <div class="modal fade" :id="movieId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title fs-3" id="staticBackdropLabel">Movie Info</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <MovieInfo :movie="movie" />
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-
     </div>
 
     <div class="card-footer">

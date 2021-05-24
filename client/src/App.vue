@@ -53,32 +53,32 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title fs-3" id="staticBackdropLabel">Movie Info</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button @click="onClose" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+            <div v-if="!selectedMovieDetail" class="container">
+              <hr>
+              <p class="fs-1 text-center alert alert-danger">WARNING!!</p>
+              <hr>
+              <p class="fs-2 text-center alert alert-danger">
+                영화 제목이 올바르지 않습니다!
+                <br>
+                영화 제목을 확인한 후 제대로 입력해 주세요!!
+                <br>
+                The movie title is incorrect
+                <br>
+                Please check the movie title and enter it correctly
+              </p>
+              
+            </div>
             <MovieInfo />
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+            <button @click="onClose" type="button" class="btn" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Movie Rating -->
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="movieRatingOffcanvas" aria-labelledby="offcanvasBottomLabel">
-      <div class="offcanvas-header">
-        <h3 class="offcanvas-title" id="offcanvasBottomLabel">Rating Movie</h3>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body small">
-        
-      </div>
-    </div>
-
-    <button id="MovieInfoBtn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#movieInfoModal">
-      Detail
-    </button>
     
   </div>
 </template>
@@ -103,7 +103,10 @@ export default {
     this.$store.dispatch('getMovie')
     this.$store.dispatch('getReviews')
     this.$store.dispatch('getRatedMovies')
-    this.$store.dispatch('getRecommendation')
+    
+  },
+  computed: {
+    ...mapState(['selectedMovieDetail'])
   },
   computed: {
     ...mapState(['server_url', 'isLogin'])
@@ -118,9 +121,12 @@ export default {
       .then(res => {
         console.log(res)
       })
+    },
+    
+    onClose: function () {
+      this.$store.commit('DELETE_SELECT_DETAIL')
     }
   }
-
   
 }
 </script>

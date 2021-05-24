@@ -15,11 +15,9 @@ export default new Vuex.Store({
     
     //comment_list 추가
     comment_list: [],
-    recommend_lst: [],
     selectedMovieDetail: null,
+    selectedMovieRecommend: '',
     
-    // Search Bar 함수 추가
-    isSearch: false,
     jwtHeader: '',
     isLogin: false
 
@@ -47,21 +45,43 @@ export default new Vuex.Store({
       state.review_list.push(res)
     },
 
-    GET_RECOMMENDATION: function (state, res) {
-      state.recommend_lst.push(res.data)
-    },
+    // GET_RECOMMENDATION: function (state, res) {
+    //   state.recommend_lst.push(res.data)
+    // },
 
     SELECT_MOVIE: function (state, res) {
       state.selectedMovieDetail = res
     },
-    // Search Bar 함수 추가
-    SEARCH_MOVIE: function(state) {
-      state.isSearch = true
-    },
-
+    
     GET_COMMENTS: function(state, res) {
       state.comment_list = res.data
+    },
+
+    RECOMMEND_MOVIE: function (state, res) {
+      let reco_lst = []
+      for (const movieId of res.data) {
+        for (const movie of state.movie_list) {
+          if (movieId === movie.id) {
+            reco_lst.push(movie)
+          }
+        }
+      }
+      state.selectedMovieRecommend = reco_lst
+    },
+
+    SEARCH_MOVIE: function (state, res) {
+      for (const movie of state.movie_list) {
+        if (movie.title === res) {
+          state.selectedMovieDetail = movie
+          
+        }
+      }
+    },
+
+    DELETE_SELECT_DETAIL: function (state) {
+      state.selectedMovieDetail = null
     }
+
   },
   
   actions: {
@@ -247,25 +267,37 @@ export default new Vuex.Store({
       })
       .then( res => {
         context.state.rated_movie_lst = res.data
-        console.log(context.state.rated_movie_lst);
       })
       .catch( err => {
         console.log(err);
       })
     },
 
-    getRecommendation: function (context) {
+    getRecommendation: function (context, id) {
       axios({
         method: 'get',
-        url: this.state.server_url + 'accounts/cf',
+        url: this.state.server_url + 'accounts/cf' + `/${id}`,
       })
       .then( res => {
         console.log(res)
-        context.commit('GET_RECOMMENDATION', res)
+        context.commit('RECOMMEND_MOVIE', res)
       })
       .catch( err => {
         console.log(err)
       })
+    },
+
+    selectRecommendMovie: function (context, res) {
+      let selectMovieId
+      for (const movie of context.state.movie_list) {
+        if (movie.title === res) {
+          selectMovieId = movie.id
+          console.log(selectMovieId);
+        }
+      }
+      context.dispatch('getRecommendation', selectMovieId)
+      
+
     },
 
     setToken: function(context) {
@@ -274,7 +306,7 @@ export default new Vuex.Store({
         Authorization: `JWT ${token}`
       }
       context.state.jwtHeader = config
-    }
+    },
 
   },
   

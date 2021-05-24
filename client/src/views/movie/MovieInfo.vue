@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="selectedMovieDetail">
     <div class="row container">
       <div class="col-4">
         <img :src="`https://image.tmdb.org/t/p/w500${this.selectedMovieDetail.poster_path}`" class="img-fluid" alt="poster_path">  
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-// import MovieRating from '@/views/movie/MovieRating.vue'
+
 import { mapState } from 'vuex'
 
 export default {
@@ -65,7 +65,7 @@ export default {
     }
   },
   components: {
-    // MovieRating,
+    
   },
   computed: {
     ...mapState(['selectedMovieDetail', 'rated_movie_lst'])
