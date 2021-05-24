@@ -2,9 +2,9 @@
   <div class="home">
 
     <div class="input-group mb-3">
-      <input type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2">
+      <input v-model="searchMovie" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2" >
       <!-- Search Bar 함수 추가 -->
-      <button @click="onSearch" class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+      <button @click="onSearch" class="btn btn-outline-secondary" id="MovieInfoBtn" type="button" data-bs-toggle="modal" data-bs-target="#movieInfoModal">Search</button>
         <datalist id="dataList">
           <option v-for="movie of movie_list" :key="movie.id" :value="movie.title" ></option>
         </datalist>
@@ -59,11 +59,12 @@ export default {
   data: function() {
     return {
       URL_HEAD : 'https://image.tmdb.org/t/p/w500/',
+      searchMovie: ''
     }
   },
 
   computed: {
-    ...mapState(['movie_list'])
+    ...mapState(['movie_list', 'selectedMovieDetail'])
   },
   methods: {
     onMovieDetail: function(){
@@ -72,9 +73,9 @@ export default {
     onBoard: function() {
       this.$router.push({name: 'FreeBoard'})
     },
-    // Search Bar 함수 추가
     onSearch: function () {
-      this.$store.commit('SEARCH_MOVIE')
+      this.$store.commit('SEARCH_MOVIE', this.searchMovie)
+      this.searchMovie = ''
     },
     onRecommendation: function () {
       this.$router.push({name: 'Recommendation'})

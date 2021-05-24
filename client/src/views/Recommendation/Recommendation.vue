@@ -1,21 +1,24 @@
 <template>
   <div>
     <div class="input-group mb-3">
-      <input type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2">
+      <input v-model="movieTitle" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2">
       <!-- Search Bar 함수 추가 -->
-      <button @click="onRecommend" class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+      <button @click="onRecommend" class="btn btn-outline-secondary" type="button" id="button-addon2">Select</button>
         <datalist id="dataList">
           <option v-for="movie of movie_list" :key="movie.id" :value="movie.title" ></option>
         </datalist>
     </div>
-    요기는 추천 페이지
-    {{ recommend_lst }}
-      <p>
-        {{ selectedMovieId }}
+    
+    <div v-if="selectedMovieRecommend">
+      
+    </div>
+    <div v-else>
+      <p v-for="movie of selectedMovieRecommend" :key="movie.id">
+        <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" class="img-fluid" alt="poster_path">  
+        {{ movie.title }}
       </p>
-      <p>
-        {{ selectedMovie }}
-      </p>
+    </div>
+
   </div>
 </template>
 
@@ -26,25 +29,19 @@ export default {
   name: 'Recommendation',
   data: function () {
     return {
-      selectedMovieId: 1,
-      selectedMovieTitle: this.movie_list,
+      movieTitle: null,
     }
   },
   computed: {
-    ...mapState(['recommend_lst','movie_list']),
-    selectedMovie: function () {
-      for (const movie in this.movie_list) {
-        console.log(movie.title)
-        if (movie.title === this.selectedMovieId) {
-          return movie.title
-        }
-      }
-      return '영화가 없습니다.'
-    }
+    ...mapState(['movie_list', 'selectedMovieRecommend']),
   },
   methods: {
     onRecommend: function () {
-
+      if (this.movieTitle === null) {
+        alert('영화 제목이 올바르지 않습니다!\n영화 제목을 확인한 후 제대로 입력해 주세요!!')
+      }
+      else {this.$store.dispatch('selectRecommendMovie', this.movieTitle)}
+      this.movieTitle = null
     }
   },
   created: function () {
