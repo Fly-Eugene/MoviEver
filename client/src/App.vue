@@ -10,23 +10,38 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <router-link to="/">Home</router-link> |
-            </li>
-            <li class="nav-item">
-              <router-link :to="{ name: 'Signup' }">Singup</router-link> |
-            </li>
-            <li class="nav-item">
-              <router-link :to="{ name: 'Login' }">Login</router-link> |
-            </li>
-            <li class="nav-item">
-              <router-link @click.native="$store.dispatch('logout')" to='#'>Logout</router-link> |
-            </li>
-            <li class="nav-item">
-              <router-link :to="{ name: 'Movie' }">Movie</router-link> |
-            </li>
-          </ul>
+          <div v-if="isLogin">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <router-link to="/">Home</router-link> |
+              </li>
+              <li class="nav-item">
+                <router-link @click.native="$store.dispatch('logout')" to='#'>Logout</router-link> |
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'Movie' }">Movie</router-link> |
+              </li>
+              <li class="nav-item">
+                <a href="http://127.0.0.1:8000/admin/">Manager</a> |
+              </li>
+            </ul>
+          </div>
+          <div v-else>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <router-link to="/">Home</router-link> |
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'Signup' }">Singup</router-link> |
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'Login' }">Login</router-link> |
+              </li>
+              <li class="nav-item">
+                <span @click="onManager">Manager</span>|
+              </li>
+            </ul>            
+          </div>
         </div>
       </div>
     </nav>
@@ -70,7 +85,8 @@
 
 <script>
 import MovieInfo from '@/views/movie/MovieInfo.vue'
-import { mapState } from 'vuex'
+import {mapState} from 'vuex'
+import axios from 'axios'
 
 
 export default {
@@ -83,6 +99,7 @@ export default {
     MovieInfo,
   },
   created: function () {
+    this.$store.commit('CHANGE_ISLOGIN')
     this.$store.dispatch('getMovie')
     this.$store.dispatch('getReviews')
     this.$store.dispatch('getRatedMovies')
@@ -91,14 +108,25 @@ export default {
   computed: {
     ...mapState(['selectedMovieDetail'])
   },
+  computed: {
+    ...mapState(['server_url', 'isLogin'])
+  },
 
   methods: {
+    onManager: function() {
+      axios({
+        method: 'get',
+        url: this.server_url + 'accounts/manager/'
+      })
+      .then(res => {
+        console.log(res)
+      })
+    },
+    
     onClose: function () {
       this.$store.commit('DELETE_SELECT_DETAIL')
     }
   }
-
-  
   
 }
 </script>
