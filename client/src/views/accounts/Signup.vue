@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <div>
     <h1>Signup</h1>
     <div>
@@ -13,10 +13,35 @@
       <label for="passwordConfirmation">비밀번호 확인: </label>
       <input type="password" id="passwordConfirmation" v-model="credentials.passwordConfirmation">
     </div>
-    <!-- 여기서 dispatch로 vuex에 있는 signup 에 접근, credentials 데이터 넘겨주기 -->
     <button @click="$store.dispatch('signup', credentials)">회원가입</button>
   </div>
+</template> -->
+
+<template>
+  <div>
+    <div class='d-flex justify-content-center' id='imgdiv'>
+      <img src="../../../../logo.png" alt="" id="loginImg">
+    </div>
+    <div class="container d-flex justify-content-center">
+      <form>
+        <div class="mb-4">
+          <input size='50' placeholder="ID" type="email" id="idInput" v-model="credentials.username">
+          <div id="emailHelp" class="form-text">We'll never share your ID with anyone else.</div>
+        </div>
+        <div class="mb-4">
+          <input placeholder="Password" type="password" id="passwordInput" v-model="credentials.password">
+        </div>
+        <div class="mb-4">
+          <input placeholder="PasswordConfirmation" type="password" id="passwordConfirmationInput" v-model="credentials.passwordConfirmation">
+        </div>
+
+        <button id="signupbtn" @click="$store.dispatch('signup', credentials)">회원가입</button>
+      </form>
+    </div>
+  </div>
 </template>
+
+
 
 <script>
 // import axios from 'axios'
@@ -37,5 +62,11 @@ export default {
 </script>
 
 <style>
-
+#signupbtn{
+  width: 500px;
+  height: 50px;
+  color: #262223;
+  font-size: 25px;
+  background-color: #DDC6B6;
+}
 </style>
