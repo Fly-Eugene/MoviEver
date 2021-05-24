@@ -58,7 +58,7 @@ export default {
   },
   data: function() {
     return {
-      URL_HEAD : 'https://image.tmdb.org/t/p/w500/'
+      URL_HEAD : 'https://image.tmdb.org/t/p/w500/',
     }
   },
 
@@ -112,6 +112,7 @@ body {
 
 .swiper-button-down{
   cursor: pointer;
+  text-align: center;
 }
 
 .input-group{

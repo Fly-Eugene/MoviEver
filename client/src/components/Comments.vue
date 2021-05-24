@@ -1,5 +1,7 @@
 <template>
-  <li> {{comment.content }} </li>
+  <div class="freeBoardItem p-2" id="commentItem">
+    {{ comment.content }}
+  </div>
 </template>
 
 <script>
@@ -15,5 +17,7 @@ export default {
 </script>
 
 <style>
-
+#commentItem{
+  font-size: 25px;
+}
 </style>

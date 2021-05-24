@@ -51,8 +51,8 @@ export default {
   font-family: "Lobster Two", Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #DDC6B6;
+  /* text-align: center; */
 }
 
 #navbarNav {
@@ -70,7 +70,7 @@ export default {
 }
 
 .navbar {
-  background-color: #262223;
+  background-color: #DDC6B6;
 }
 
 </style>
