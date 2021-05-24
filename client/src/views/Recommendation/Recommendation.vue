@@ -10,13 +10,13 @@
     </div>
     
     <div v-if="selectedMovieRecommend">
-      
-    </div>
-    <div v-else>
       <p v-for="movie of selectedMovieRecommend" :key="movie.id">
         <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" class="img-fluid" alt="poster_path">  
         {{ movie.title }}
       </p>
+    </div>
+    <div v-else>
+      
     </div>
 
   </div>
