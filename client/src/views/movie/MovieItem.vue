@@ -80,6 +80,7 @@ export default {
   /* font-family: "Architects Daughter", "Noto Sans KR" */
   background-color: #DDC6B6;
   color: #262223;
+  text-align: center;
 }
 
 .btn {

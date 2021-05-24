@@ -70,7 +70,7 @@ export default {
 }
 
 .navbar {
-  background-color: #DDC6B6;
+  background-color: #262223;
 }
 
 </style>
