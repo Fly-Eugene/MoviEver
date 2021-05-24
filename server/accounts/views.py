@@ -4,9 +4,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import UserSerializer, LikeMovieSerializer
 from .models import LikeMovie
-
+from django.contrib.auth import get_user_model
 from django.shortcuts import render
-
+from movies.models import Movie
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
@@ -64,7 +64,7 @@ def like_movie(request):
 
 
 @api_view(['GET'])
-def cf_algo(request):
+def cf_algo(request, movie_id):
     like_movie_list = LikeMovie.objects.all()
     serializer = LikeMovieSerializer(like_movie_list,many=True)
     df = pd.json_normalize(serializer.data)
@@ -73,20 +73,24 @@ def cf_algo(request):
     item_based_collabor = cosine_similarity(movie_user_rating)
     item_based_collabor = pd.DataFrame(data = item_based_collabor, index=movie_user_rating.index, columns=movie_user_rating.index)
     
-    # print(df)
-    # print(movie_user_rating)
-    # print(item_based_collabor)
-
-    # seeder = Seed.seeder()
-    # seeder.add_entity(LikeMovie, 100, {
-    #     'movie': lambda x: seeder.faker.Movie,
-    #     'user': lambda x: random,
-    #     'rating': lambda x: random.randint(1, 5)
-    # })
-    # seeder.execute()
+    df_list = item_based_collabor[movie_id].sort_values(ascending=False)[1:6]
+    df_index = list(df_list.index.values)
+    return Response(df_index)
 
 
-    return Response(item_based_collabor)
+@api_view(['GET'])
+def dummy(request):
+    for _ in range(100):
+        User = get_user_model()
+        random_movie = Movie.objects.order_by("?")[0]
+        random_user = User.objects.order_by("?").first()
+        rating = random.randint(1, 5)
+        Dummy = LikeMovie()
+        Dummy.user = random_user
+        Dummy.movie = random_movie
+        Dummy.rating = rating
+        Dummy.save()
+    return Response(status=status.HTTP_201_CREATED)
 
     
 
