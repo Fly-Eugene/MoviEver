@@ -30,7 +30,7 @@
           <!-- <label for="exampleInputPassword1" class="form-label">Password</label> -->
           <input placeholder="Password" type="password" id="passwordInput" v-model="credentials.password">
         </div>
-        <button id="loginbtn" @click="$store.dispatch('login', credentials)">로그인</button>
+        <button class="btn" id="loginbtn" @click="$store.dispatch('login', credentials)">로그인</button>
       </form>
     </div>
   </div>

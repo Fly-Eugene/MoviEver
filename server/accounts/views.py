@@ -73,9 +73,9 @@ def cf_algo(request):
     item_based_collabor = cosine_similarity(movie_user_rating)
     item_based_collabor = pd.DataFrame(data = item_based_collabor, index=movie_user_rating.index, columns=movie_user_rating.index)
     
-    print(df)
-    print(movie_user_rating)
-    print(item_based_collabor)
+    # print(df)
+    # print(movie_user_rating)
+    # print(item_based_collabor)
 
     # seeder = Seed.seeder()
     # seeder.add_entity(LikeMovie, 100, {

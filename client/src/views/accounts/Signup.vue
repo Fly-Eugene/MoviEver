@@ -35,7 +35,7 @@
           <input placeholder="PasswordConfirmation" type="password" id="passwordConfirmationInput" v-model="credentials.passwordConfirmation">
         </div>
 
-        <button id="signupbtn" @click="$store.dispatch('signup', credentials)">회원가입</button>
+        <button class="btn" id="signupbtn" @click="$store.dispatch('signup', credentials)">회원가입</button>
       </form>
     </div>
   </div>

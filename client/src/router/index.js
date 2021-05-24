@@ -6,7 +6,7 @@ import Home from '../views/Home.vue'
 import Signup from '@/views/accounts/Signup'
 import Login from '@/views/accounts/Login'
 import Movie from '@/views/movie/Movie'
-import MovieInfo from '@/views/movie/MovieInfo'
+import Recommendation from '@/views/Recommendation/Recommendation.vue'
 import FreeBoard from '@/views/Board/FreeBoard'
 import FreeBoardCreate from '@/views/Board/FreeBoardCreate'
 import FreeBoardDetail from '@/views/Board/FreeBoardItem'
@@ -39,10 +39,9 @@ const routes = [
     // 주소를 동적 라우팅 하기 위해서는 v-bind를 통해 원하는 변수를 표현해준다.
     // 만약 같이 보내고 싶은 데이터가 있다면 props를 true로 해준다.
     // 상세한 사항이 궁금하다면 MovieItem.vue로 가시면 됩니다!
-    path: '/movies/:id',
-    name: 'MovieInfo',
-    component: MovieInfo,
-    props:true
+    path: '/Recommendation',
+    name: 'Recommendation',
+    component: Recommendation,
   },
   // 자유게시판 목록들을 보여주는 라우터
   {

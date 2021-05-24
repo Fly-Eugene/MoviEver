@@ -12,6 +12,9 @@ export default new Vuex.Store({
     movie_list: [],
     review_list: [],
     rated_movie_lst: [],
+    recommend_lst: [],
+    jwtHeader: '이게 현재',
+    selectedMovieDetail: null,
     // Search Bar 함수 추가
     isSearch: false,
   },
@@ -26,6 +29,14 @@ export default new Vuex.Store({
     
     CREATE_REVIEW: function(state, res) {
       state.review_list.push(res)
+    },
+
+    GET_RECOMMENDATION: function (state, res) {
+      state.recommend_lst.push(res.data)
+    },
+
+    SELECT_MOVIE: function (state, res) {
+      state.selectedMovieDetail = res
     },
     // Search Bar 함수 추가
     SEARCH_MOVIE: function(state) {
@@ -109,11 +120,12 @@ export default new Vuex.Store({
     // },
 
     createReview: function(context, review) {
+      context.dispatch('setToken')
       axios({
         method: 'post',
         url: this.state.server_url + 'freeboard/',
         data: review,
-        headers: this.getters.setToken
+        headers: context.state.jwtHeader
         })
         .then(res => {
           console.log(res)
@@ -178,12 +190,12 @@ export default new Vuex.Store({
     },
     
     ratingMovie: function (context, ratingData) {
+      context.dispatch('setToken')
       axios({
         method: 'post',
         url: this.state.server_url + 'accounts/like-movie/',
         data: ratingData,
-        headers: {'X-Requested-With': 'XMLHttpRequest', 
-        ...this.getters.setToken }
+        headers: context.state.jwtHeader
           
       })
       .then( res => {
@@ -199,12 +211,11 @@ export default new Vuex.Store({
     },
     
     getRatedMovies: function (context) {
+      context.dispatch('setToken')
       axios({
         method: 'get',
         url: this.state.server_url + 'accounts/like-movie/',
-        headers: {'X-Requested-With': 'XMLHttpRequest',
-                  ...this.getters.setToken
-        },
+        headers: context.state.jwtHeader
       })
       .then( res => {
         context.state.rated_movie_lst = res.data
@@ -215,18 +226,33 @@ export default new Vuex.Store({
       })
     },
 
+    getRecommendation: function (context) {
+      axios({
+        method: 'get',
+        url: this.state.server_url + 'accounts/cf',
+      })
+      .then( res => {
+        console.log(res)
+        context.commit('GET_RECOMMENDATION', res)
+      })
+      .catch( err => {
+        console.log(err)
+      })
+    },
     
+    setToken: function(context) {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      context.state.jwtHeader = config
+    }
+
   },
   
     getters: {
-      setToken: function() {
-        const token = localStorage.getItem('jwt')
-        const config = {
-          Authorization: `JWT ${token}`
-        }
-        console.log(config);
-        return config
-      }
+      // 얘는 속성만 actions로 만들어서 하자!
+      
     },
     
   modules: {

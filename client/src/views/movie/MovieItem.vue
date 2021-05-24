@@ -7,8 +7,8 @@
       <!-- 원하는 링크의 이름을 name 키를 통해 전달하고 그 뒤로 params를 통해 동적 라우팅 변수(:id)와 전달할 props(movie)를 함께 넘겨 줍니다! -->
     
       
-      
-      <div class="modal fade" :id="movieId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <!-- 200개가 생성되어 있다 얘를 for문으로 돌리면 안된다! -->
+      <!-- <div class="modal fade" :id="movieId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
           <div class="modal-content">
             <div class="modal-header">
@@ -23,12 +23,13 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+
+
     </div>
 
-      <!-- <router-link class="btn" :to="{ name: 'MovieInfo', params: { id: movie.id, movie: movie } }">Detail</router-link> -->
     <div class="card-footer">
-      <button id="MovieInfoBtn" type="button" class="btn" data-bs-toggle="modal" :data-bs-target="`#${movieId}`">
+      <button @click="onMovieInfo" id="MovieInfoBtn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#movieInfoModal">
         Detail
       </button>
     </div>
@@ -40,18 +41,18 @@
 </template>
 
 <script>
-import MovieInfo from '@/views/movie/MovieInfo.vue'
+// import MovieInfo from '@/views/movie/MovieInfo.vue'
 import { mapState } from 'vuex'
 
 export default {
   name: 'MovieItem',
   data: function () {
     return {
-      movieId: `movieId${this.movie.id}`,
+      // movieId: `movieId${this.movie.id}`,
     }
   },
   components: {
-    MovieInfo
+    // MovieInfo
   },
   props: {
     movie: {
@@ -61,6 +62,11 @@ export default {
   },
   computed: {
     ...mapState(['isSearch'])
+  },
+  methods: {
+    onMovieInfo: function () {
+      this.$store.commit('SELECT_MOVIE', this.movie)
+    }
   },
   // Search Bar 함수 추가
   watch: {
