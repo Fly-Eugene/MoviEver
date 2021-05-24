@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="row">
+  <div>
+    <div class="row container">
       <div class="col-4">
         <img :src="`https://image.tmdb.org/t/p/w500${this.movie.poster_path}`" class="img-fluid" alt="poster_path">  
       </div>
@@ -37,26 +37,28 @@
         </div>
         <hr>
       </div>
-
-        <div class="offcanvas offcanvas-bottom" tabindex="-1" :id="ratingId" aria-labelledby="offcanvasBottomLabel">
-          <div class="offcanvas-header">
-            <h3 class="offcanvas-title" id="offcanvasBottomLabel">Rating Movie</h3>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body small">
-            <p>
-              <label for="rating" class="fs-5">Select Your Rate</label>
-                <select class="form-select" aria-label="Default select example" v-model="rating" aria-placeholder="Select your Rate">
-                  <option value="1" >One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                  <option value="4">Four</option>
-                  <option value="5">Five</option>
-                </select>
-              <button @click="onClick" class="btn">작성</button>
-            </p>
-          </div>
+    </div>
+    
+    <div class="customizeOffcanvas">
+      <div class="offcanvas offcanvas-bottom" tabindex="-1" :id="ratingId" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas-header">
+          <h3 class="offcanvas-title" id="offcanvasBottomLabel">Rating Movie</h3>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+        <div class="offcanvas-body small">
+          <p>
+            <label for="rating" class="fs-5">Select Your Rate</label>
+              <select class="form-select" aria-label="Default select example" v-model="rating" aria-placeholder="Select your Rate">
+                <option value="1" >One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+                <option value="4">Four</option>
+                <option value="5">Five</option>
+              </select>
+            <button @click="onClick" class="btn">작성</button>
+          </p>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -111,5 +113,11 @@ export default {
     color: #262223;
     background-color: #DDC6B6;
   }
+
+  .offcanvas{
+    margin: 300px 100px;
+  }
+
+
 
 </style>

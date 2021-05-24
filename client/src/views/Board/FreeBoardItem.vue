@@ -18,7 +18,7 @@
     <hr>
     <p class="m-3" id="boardCommentLogo">댓글</p>
     <!-- 댓글 목록 -->
-    <Comments v-for="comment in comments" :key="comment.id" :comment="comment"/>
+    <Comments v-for="comment in comment_list" :key="comment.id" :comment="comment"/>
     <!-- 댓글 input -->
     <div class="m-2">
       <!-- <input type="text" v-model="new_comment"> -->
@@ -26,7 +26,7 @@
     </div>
     <!--댓글 완료 버튼-->
     <div class="d-flex justify-content-md-end">
-      <button class="btn" id="saveBoardBtn" @click="$store.dispatch('createComment', [review.id, new_comment])">댓글 작성</button>
+      <button class="btn" id="saveBoardBtn" @click="onClick">댓글 작성</button>
     </div>
 
 
@@ -36,7 +36,6 @@
 <script>
 import axios from 'axios'
 import {mapState} from 'vuex'
-import {mapGetters} from 'vuex'
 import Comments from '@/components/Comments.vue'
 
 export default {
@@ -47,7 +46,7 @@ export default {
   data: function() {
     return {
       new_comment: null,
-      comments: [],
+      // comments: [],
     }
   },
   props: {
@@ -57,44 +56,56 @@ export default {
   },
   methods: {
     deleteReview: function(review){
-      console.log(this.setToken)
+      this.$store.dispatch('setToken')
       axios({
         method: 'delete',
         url: this.server_url + `freeboard/${review.id}/`,
-        headers: this.setToken
+        headers: this.jwtHeader
       })
       .then(res => {
-        console.log(res.data)
+        console.log('여기는 FreeBoardItem.vue', res.data)
         this.$router.push({ name: 'FreeBoard' })
       })
     },
+
     gotoUpdate: function(review) {
       this.$router.push({name: 'FreeBoardUpdate', params: { id: review.id, review: review }})
     },
-    getComments: async function(review) {
-      const response = await axios({
-        method: 'get',
-        url: this.server_url + `freeboard/${review.id}/comment/`,
-        headers: this.setToken,
-      })
-      .catch(err => {
-        console.log(err)
-      })
 
-      if(!response) return
-      console.log('axios', response.data)
-      return response.data
+    onClick: function(){
+      this.$store.dispatch('createComment', [this.review.id, this.new_comment])
+      this.new_comment = ''
+    }
 
-    },
+    // getComments: async function(review) {
+    //   this.$store.dispatch('setToken')
+    //   const response = await axios({
+    //     method: 'get',
+    //     url: this.server_url + `freeboard/${review.id}/comment/`,
+    //     headers: this.jwtHeader
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
+
+    //   if(!response) return
+    //   console.log('axios', response.data)
+    //   return response.data
+    // },
   },
+
   computed: {
-    ...mapState(['server_url']),
-    ...mapGetters(['setToken']),
+    ...mapState(['server_url', 'jwtHeader', 'comment_list']),
   },
-  created: async function() {
-    this.comments = await this.getComments(this.review)
-    console.log('이게 this.comments', this.comments)
+
+  created: function(){
+    this.$store.dispatch('getComments', this.review.id)
   }
+
+  // created: async function() {
+  //   this.comments = await this.getComments(this.review)
+  //   console.log('이게 this.comments', this.comments)
+  // }
 }
 </script>
 

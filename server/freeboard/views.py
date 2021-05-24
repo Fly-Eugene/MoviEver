@@ -64,7 +64,7 @@ def comment(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
 
     if request.method == 'GET':
-        comment = Comment.objects.all()
+        comment = review.comment_set.all()
         serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data)
     
