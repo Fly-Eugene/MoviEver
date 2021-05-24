@@ -12,7 +12,8 @@ export default new Vuex.Store({
     movie_list: [],
     review_list: [],
     rated_movie_lst: [],
-    
+    // Search Bar 함수 추가
+    isSearch: false,
   },
   mutations: {
     GET_MOVIE: function(state, res) {
@@ -25,6 +26,10 @@ export default new Vuex.Store({
     
     CREATE_REVIEW: function(state, res) {
       state.review_list.push(res)
+    },
+    // Search Bar 함수 추가
+    SEARCH_MOVIE: function(state) {
+      state.isSearch = true
     },
   },
   
@@ -209,6 +214,7 @@ export default new Vuex.Store({
         console.log(err);
       })
     },
+
     
   },
   
