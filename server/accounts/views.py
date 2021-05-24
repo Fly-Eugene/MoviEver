@@ -17,7 +17,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from django_seed import Seed
 import random
-import faker
+
 
 # Create your views here.
 @api_view(['POST'])
