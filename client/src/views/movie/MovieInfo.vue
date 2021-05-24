@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="row">
+  <div>
+    <div class="row container">
       <div class="col-4">
         <img :src="`https://image.tmdb.org/t/p/w500${this.selectedMovieDetail.poster_path}`" class="img-fluid" alt="poster_path">  
       </div>
@@ -47,7 +47,6 @@
         <hr>
       </div>
 
-        
     </div>
 
   </div>
@@ -105,5 +104,11 @@ export default {
     color: #262223;
     background-color: #DDC6B6;
   }
+
+  .offcanvas{
+    margin: 300px 100px;
+  }
+
+
 
 </style>

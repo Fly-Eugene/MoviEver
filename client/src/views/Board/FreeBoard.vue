@@ -15,7 +15,7 @@
         <BoardTable v-for="review in review_list" :key="review.id" :review="review"/>
       </table>
     </div>
-    <div class="d-flex justify-content-center" >
+    <!-- <div class="d-flex justify-content-center" >
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
@@ -33,7 +33,7 @@
           </li>
         </ul>
       </nav>
-    </div>
+    </div> -->
   </div>
 </template>
 
