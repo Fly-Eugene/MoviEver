@@ -13,3 +13,4 @@ class LikeMovie(models.Model):
     rating = models.IntegerField()
 
 
+
