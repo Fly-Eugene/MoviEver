@@ -63,21 +63,33 @@ export default {
   },
 
   computed: {
-    ...mapState(['movie_list'])
+    ...mapState(['movie_list', 'isLogin'])
   },
   methods: {
     onMovieDetail: function(){
       this.$router.push({name: 'Movie'})
     },
     onBoard: function() {
-      this.$router.push({name: 'FreeBoard'})
+      if (this.isLogin) {
+        this.$router.push({name: 'FreeBoard'})
+      }
+      else {
+        alert('로그인이 필요한 페이지 입니다.')
+        this.$router.push({name : 'Login'})
+      }
     },
     // Search Bar 함수 추가
     onSearch: function () {
       this.$store.commit('SEARCH_MOVIE')
     },
     onRecommendation: function () {
-      this.$router.push({name: 'Recommendation'})
+      if (this.isLogin) {
+        this.$router.push({name: 'Recommendation'})
+      }
+      else {
+        alert('로그인이 필요한 페이지 입니다.')
+        this.$router.push({name : 'Login'})
+      }
     }
   }
 }

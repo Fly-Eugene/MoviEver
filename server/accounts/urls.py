@@ -7,6 +7,7 @@ urlpatterns = [
     path('like-movie/', views.like_movie),
     path('api-token-auth/', obtain_jwt_token),
     path('cf/', views.cf_algo),
+    path('manager/', views.manager),
 
 ]
 

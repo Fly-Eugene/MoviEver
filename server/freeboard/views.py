@@ -32,11 +32,25 @@ def review(request):
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)      # 유효성 검사를 통과하면 해당 모델에 바로 저장을 해주는 겁니다...
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+@authentication_classes([JSONWebTokenAuthentication])       # JWT가 유효한지 체크
+@permission_classes([IsAuthenticated])          # 인증이 되어있는 상태인지 체크
+def check_validation(request, review_pk):
     
+    validation = True
+
+    # 해당 유저만 삭제 또는 수정이 가능하도록 한다.
+    if not request.user.reviews.filter(pk=review_pk).exists():
+        validation = False
+        return Response(validation, status=status.HTTP_403_FORBIDDEN)
+
+    return Response(validation, status=status.HTTP_200_OK)
+
+
 @api_view(['PUT', 'DELETE'])
 @authentication_classes([JSONWebTokenAuthentication])       # JWT가 유효한지 체크
 @permission_classes([IsAuthenticated])          # 인증이 되어있는 상태인지 체크
-
 def review_detail(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
 

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, LikeMovieSerializer
 from .models import LikeMovie
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -88,5 +88,7 @@ def cf_algo(request):
 
     return Response(item_based_collabor)
 
-    
+
+def manager(request):
+    return redirect('http://127.0.0.1:8000/admin/')
 
