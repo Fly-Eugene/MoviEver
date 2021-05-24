@@ -32,17 +32,64 @@
     </nav>
 
     <router-view/>
+    <!-- Movie Info -->
+    <div class="modal fade" id="movieInfoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title fs-3" id="staticBackdropLabel">Movie Info</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <MovieInfo />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Movie Rating -->
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="movieRatingOffcanvas" aria-labelledby="offcanvasBottomLabel">
+      <div class="offcanvas-header">
+        <h3 class="offcanvas-title" id="offcanvasBottomLabel">Rating Movie</h3>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body small">
+        
+      </div>
+    </div>
+
+    <button id="MovieInfoBtn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#movieInfoModal">
+      Detail
+    </button>
+    
   </div>
 </template>
 
 <script>
+import MovieInfo from '@/views/movie/MovieInfo.vue'
+
 
 export default {
+  data: function () {
+    return {
+      
+    }
+  },
+  components:{
+    MovieInfo,
+  },
   created: function () {
     this.$store.dispatch('getMovie')
     this.$store.dispatch('getReviews')
     this.$store.dispatch('getRatedMovies')
-  }
+    this.$store.dispatch('getRecommendation')
+  },
+
+  
+  
 }
 </script>
 

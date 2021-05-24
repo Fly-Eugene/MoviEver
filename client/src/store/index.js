@@ -12,8 +12,12 @@ export default new Vuex.Store({
     movie_list: [],
     review_list: [],
     rated_movie_lst: [],
+    
     //comment_list 추가
     comment_list: [],
+    recommend_lst: [],
+    selectedMovieDetail: null,
+    
     // Search Bar 함수 추가
     isSearch: false,
     jwtHeader: ''
@@ -30,6 +34,14 @@ export default new Vuex.Store({
     
     CREATE_REVIEW: function(state, res) {
       state.review_list.push(res)
+    },
+
+    GET_RECOMMENDATION: function (state, res) {
+      state.recommend_lst.push(res.data)
+    },
+
+    SELECT_MOVIE: function (state, res) {
+      state.selectedMovieDetail = res
     },
     // Search Bar 함수 추가
     SEARCH_MOVIE: function(state) {
@@ -101,22 +113,6 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-
-    // getComments: function(context, review_id) {
-    //   axios({
-    //     method: 'get',
-    //     url: this.state.server_url + `freeboard/${review_id}/comment/`,
-    //     headers: this.setToken,
-    //   })
-    //   .then(res => {
-    //     console.log(res.data)
-    //     return res.data
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
-
-    // },
 
     createReview: function(context, review) {
       context.dispatch('setToken')
@@ -215,7 +211,7 @@ export default new Vuex.Store({
         data: ratingData,
         headers: {'X-Requested-With': 'XMLHttpRequest',
           ...context.state.jwtHeader }
-      })
+        })
       .then( res => {
         console.log(res.data)
         // actions 내에서 actions를 실행하고 싶을 땐 이렇게!
@@ -243,7 +239,21 @@ export default new Vuex.Store({
         console.log(err);
       })
     },
-    
+
+    getRecommendation: function (context) {
+      axios({
+        method: 'get',
+        url: this.state.server_url + 'accounts/cf',
+      })
+      .then( res => {
+        console.log(res)
+        context.commit('GET_RECOMMENDATION', res)
+      })
+      .catch( err => {
+        console.log(err)
+      })
+    },
+
     setToken: function(context) {
       const token = localStorage.getItem('jwt')
       const config = {
@@ -251,10 +261,11 @@ export default new Vuex.Store({
       }
       context.state.jwtHeader = config
     }
-    
+
   },
   
     getters: {
+   
     },
     
   modules: {

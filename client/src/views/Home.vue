@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="swiper-button-prev outer-arrow" role="button">
+    <div class="swiper-button-prev outer-arrow" role="button" @click="onRecommendation">
       <i class="fas fa-chevron-left fa-3x"></i>
     </div>
     <div class="swiper-button-next outer-arrow" role="button" @click="onBoard">
@@ -75,6 +75,9 @@ export default {
     // Search Bar 함수 추가
     onSearch: function () {
       this.$store.commit('SEARCH_MOVIE')
+    },
+    onRecommendation: function () {
+      this.$router.push({name: 'Recommendation'})
     }
   }
 }

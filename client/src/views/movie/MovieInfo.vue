@@ -2,104 +2,95 @@
   <div>
     <div class="row container">
       <div class="col-4">
-        <img :src="`https://image.tmdb.org/t/p/w500${this.movie.poster_path}`" class="img-fluid" alt="poster_path">  
+        <img :src="`https://image.tmdb.org/t/p/w500${this.selectedMovieDetail.poster_path}`" class="img-fluid" alt="poster_path">  
       </div>
       <div class="col-8 text-start mt-5">
         <p class="fs-1">
-          Title: {{ movieInfo.title }}
+          Title: {{ selectedMovieDetail.title }}
         </p>
         <hr>
 
         <p class="fs-5 ">
-          <button id="ratingBtn" class="btn" type="button" data-bs-toggle="offcanvas" :data-bs-target="`#${ratingId}`" aria-controls="offcanvasBottom">Rating</button>
-          <MovieRating :movie='movie'/>
+          
+          <label for="rating" class="fs-5">Select Your Rate</label>
+            <select class="form-select" aria-label="Default select example" v-model="rating" aria-placeholder="Select your Rate">
+              <option value="1" >One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+              <option value="4">Four</option>
+              <option value="5">Five</option>
+            </select>
+          <button @click="onClick" class="btn">작성</button>
+          평점: {{ movieRating }}
         </p>
         <p class="fs-4">
-          vote_average: {{ movieInfo.vote_average }}
+          vote_average: {{ selectedMovieDetail.vote_average }}
         </p>
         
         <p>
-          release_date: {{ movieInfo.release_date }}
+          release_date: {{ selectedMovieDetail.release_date }}
         </p>
         <p>
-          vote_count: {{ movieInfo.vote_count }}
+          vote_count: {{ selectedMovieDetail.vote_count }}
         </p>
         <p class="d-inline">
           Genre:
         </p>
-        <p class="d-inline" v-for="genre in movieInfo.genres" :key="genre.id">
+        <p class="d-inline" v-for="genre in selectedMovieDetail.genres" :key="genre.id">
           |{{ genre.name }}|
         </p>
         <hr>
         <div>
           <p class="fs-3">overview</p>
-          <p>{{ movieInfo.overview }}</p>
+          <p>{{ selectedMovieDetail.overview }}</p>
         </div>
         <hr>
       </div>
-    </div>
-    
-    <div class="customizeOffcanvas">
-      <div class="offcanvas offcanvas-bottom" tabindex="-1" :id="ratingId" aria-labelledby="offcanvasBottomLabel">
-        <div class="offcanvas-header">
-          <h3 class="offcanvas-title" id="offcanvasBottomLabel">Rating Movie</h3>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body small">
-          <p>
-            <label for="rating" class="fs-5">Select Your Rate</label>
-              <select class="form-select" aria-label="Default select example" v-model="rating" aria-placeholder="Select your Rate">
-                <option value="1" >One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-                <option value="4">Four</option>
-                <option value="5">Five</option>
-              </select>
-            <button @click="onClick" class="btn">작성</button>
-          </p>
-        </div>
-      </div>
+
     </div>
 
   </div>
 </template>
 
 <script>
-import MovieRating from '@/views/movie/MovieRating.vue'
+// import MovieRating from '@/views/movie/MovieRating.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'MovieInfo',
   data: function () {
     return {
-      movieInfo: this.movie,
       rating: 0,
-      ratingId: `ratingId${this.movie.id}`,
+      movieRating: '평점이 없습니다.'
     }
   },
   components: {
-    MovieRating,
+    // MovieRating,
   },
-  props: {
-    movie:{
-        type: Object,
-        required: true,
-        defalt: null
-      }
-  },
-  created: function () {
-    if (this.movie !== null) {
-      this.movieInfo = this.movie
-    }
+  computed: {
+    ...mapState(['selectedMovieDetail', 'rated_movie_lst'])
   },
   methods: {
     onClick: function () {
       const data = {
-        movie: this.movie.id,
+        movie: this.selectedMovieDetail.id,
         rating: this.rating
       }
       this.$store.dispatch('ratingMovie', data)
+      this.updateRating()
+    },
+    updateRating: function() {
+      for (let movie of this.rated_movie_lst) {
+        if (movie.movie === this.selectedMovieDetail.id) {
+          this.movieRating = movie.rating
+        }
+      }
     }
   },
+  created: function() {
+      this.updateRating()
+    }
+  
 }
 </script>
 
