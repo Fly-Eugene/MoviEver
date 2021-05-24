@@ -10,6 +10,7 @@
         <p> {{ this.review.content }} </p>
       </div>
       <hr>
+      <!-- 수정 삭제 버튼 -->
       <div class="p-3 d-flex justify-content-end">
         <button class="btn boardBtn" @click="gotoUpdate(review)">수정</button>
         <button class="btn boardBtn" @click="deleteReview(review)">삭제</button>
@@ -28,7 +29,6 @@
     <div class="d-flex justify-content-md-end">
       <button class="btn" id="saveBoardBtn" @click="onClick">댓글 작성</button>
     </div>
-
 
   </div>
 </template>
@@ -58,40 +58,54 @@ export default {
     deleteReview: function(review){
       this.$store.dispatch('setToken')
       axios({
-        method: 'delete',
-        url: this.server_url + `freeboard/${review.id}/`,
+        method: 'get',
+        url: this.server_url + `freeboard/${review.id}/validation/`,
         headers: this.jwtHeader
       })
       .then(res => {
-        console.log('여기는 FreeBoardItem.vue', res.data)
-        this.$router.push({ name: 'FreeBoard' })
+        console.log(res.data)
+        axios({
+          method: 'delete',
+          url: this.server_url + `freeboard/${review.id}/`,
+          headers: this.jwtHeader
+        })
+        .then(res => {
+          console.log('여기는 FreeBoardItem.vue', res.data)
+          this.$store.dispatch('getReviews')
+          this.$router.push({ name: 'FreeBoard' })
+        })
+        .catch(err=> {
+          console.log(err)
+        })
+      })
+
+      .catch(err => {
+        console.log(err)
+        alert('작성한 사용자만 삭제가 가능합니다.')
       })
     },
 
     gotoUpdate: function(review) {
-      this.$router.push({name: 'FreeBoardUpdate', params: { id: review.id, review: review }})
+      this.$store.dispatch('setToken')
+      axios({
+        method: 'get',
+        url: this.server_url + `freeboard/${review.id}/validation/`,
+        headers: this.jwtHeader
+      })
+      .then(res => {
+        console.log(res.data)
+        this.$router.push({name: 'FreeBoardUpdate', params: { id: review.id, review: review }})
+      })
+      .catch(err => {
+        console.log(err)
+        alert('작성한 사용자만 수정이 가능합니다.')
+      })
     },
 
     onClick: function(){
       this.$store.dispatch('createComment', [this.review.id, this.new_comment])
       this.new_comment = ''
     }
-
-    // getComments: async function(review) {
-    //   this.$store.dispatch('setToken')
-    //   const response = await axios({
-    //     method: 'get',
-    //     url: this.server_url + `freeboard/${review.id}/comment/`,
-    //     headers: this.jwtHeader
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
-
-    //   if(!response) return
-    //   console.log('axios', response.data)
-    //   return response.data
-    // },
   },
 
   computed: {

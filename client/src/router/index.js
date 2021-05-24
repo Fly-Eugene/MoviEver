@@ -68,7 +68,8 @@ const routes = [
     name: 'FreeBoardUpdate',
     component: FreeBoardUpdate,
     props: true
-  }
+  },
+
 ]
 
 const router = new VueRouter({

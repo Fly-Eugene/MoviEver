@@ -20,10 +20,21 @@ export default new Vuex.Store({
     
     // Search Bar 함수 추가
     isSearch: false,
-    jwtHeader: ''
+    jwtHeader: '',
+    isLogin: false
 
   },
   mutations: {
+    CHANGE_ISLOGIN: function(state) {
+      const check_jwt = localStorage.getItem('jwt')
+      if (check_jwt) {
+        state.isLogin = true
+      }
+      else {
+        state.isLogin = false
+      }
+    },
+
     GET_MOVIE: function(state, res) {
       state.movie_list = res['data']
     },
@@ -62,13 +73,14 @@ export default new Vuex.Store({
         url: this.state.server_url + 'accounts/signup/',
         data: credentials,
       })
-        .then(res => {
-          console.log(res)
-          router.push({ name: 'Login' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      .then(res => {
+        console.log(res)
+        context.commit('LOGIN')
+        router.push({ name: 'Login' })
+      })
+      .catch(err => {
+        console.log(err)
+      })
     },
 
     // django의 api-token-auth 가 실행되도록 함으로써 jwt 토큰을 가지고 로그인이 됩니다.
@@ -83,8 +95,8 @@ export default new Vuex.Store({
         console.log(res)
         localStorage.setItem('jwt', res.data.token)
         context.dispatch('setToken')
-        
-        // 로그인 성공시, Home 으로 이동하는 router
+
+        context.commit('CHANGE_ISLOGIN')
         router.push({ name: 'Home'})
       })
       .catch(err => {
@@ -96,6 +108,8 @@ export default new Vuex.Store({
     logout: function (context) {
       localStorage.removeItem('jwt')
       context.dispatch('setToken')
+
+      context.commit('CHANGE_ISLOGIN')
       router.push({ name: 'Home' })
     },
 
