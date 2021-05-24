@@ -5,9 +5,7 @@
     <!-- navbar-light bg-light -->
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img src="../../logo.png" alt="" width="120" height="40">
-        </a>
+        <router-link class="navbar-brand" to="/"><img src="../../logo.png" alt="" width="120" height="40"></router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -50,11 +48,11 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Lobster Two", Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #DDC6B6;
   /* text-align: center; */
-  color: #2c3e50;
 }
 
 #navbarNav {
@@ -63,11 +61,12 @@ export default {
 
 #navbarNav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #DDC6B6;
 }
 
 #navbarNav a.router-link-exact-active {
-  color: #42b983;
+  /* 활성화 색 바꿨어요! */
+  color: #F9EBDE;
 }
 
 .navbar {

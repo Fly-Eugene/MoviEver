@@ -2,8 +2,12 @@
   <div class="home">
 
     <div class="input-group mb-3">
-      <input type="text" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2">
-      <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+      <input type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2">
+      <!-- Search Bar 함수 추가 -->
+      <button @click="onSearch" class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+        <datalist id="dataList">
+          <option v-for="movie of movie_list" :key="movie.id" :value="movie.title" ></option>
+        </datalist>
     </div>
 
     <!-- Carousel 시작 -->
@@ -67,6 +71,10 @@ export default {
     },
     onBoard: function() {
       this.$router.push({name: 'FreeBoard'})
+    },
+    // Search Bar 함수 추가
+    onSearch: function () {
+      this.$store.commit('SEARCH_MOVIE')
     }
   }
 }
