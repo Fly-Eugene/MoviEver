@@ -1,8 +1,6 @@
 <template>
   <div v-if="selectedMovieDetail">
-    <div>
-      <button @click="$store.dispatch('onYoutube', selectedMovieDetail.title)">Youtube</button>
-    </div>
+
     <div class="row container">
       <div class="col-4">
         <img :src="`https://image.tmdb.org/t/p/w500${this.selectedMovieDetail.poster_path}`" class="img-fluid" alt="poster_path">  
@@ -25,10 +23,25 @@
             </select>
           <button @click="onClick" class="btn btn-outline-secondary">작성</button>
         </p>
+        <div v-if="selectedRating == '평점이 없습니다.'">
+          평점: 평점을 등록해보세요
+        </div>
+        <div v-if="selectedRating == 1">
+          평점: <i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+        </div>
+        <div v-if="selectedRating == 2">
+          평점: <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+        </div>
+        <div v-if="selectedRating == 3">
+          평점: <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+        </div>
+        <div v-if="selectedRating == 4">
+          평점: <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+        </div>
+        <div v-if="selectedRating == 5">
+          평점: <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+        </div>
         <p>
-          평점: {{ selectedRating }}
-        </p>
-        <p class="fs-4">
           vote_average: {{ selectedMovieDetail.vote_average }}
         </p>
         
@@ -51,7 +64,13 @@
         </div>
         <hr>
       </div>
-
+    </div>
+    
+    <!-- 유튜브 영상 표시하기 -->
+    <div v-if='videoURI' class="container">
+      <div class="video-container">
+        <iframe id="ytplayer" :src="videoURI" type="text/html"> </iframe>
+      </div>
     </div>
 
   </div>
@@ -73,9 +92,21 @@ export default {
     
   },
   computed: {
-    ...mapState(['selectedMovieDetail', 'rated_movie_lst', 'selectedRating'])
+    ...mapState(['selectedMovieDetail', 'rated_movie_lst', 'selectedRating', 'youtube']),
+
+    videoURI: function () {
+      if (this.youtube) {
+        const videoId = this.youtube['id']['videoId']
+        return `https://www.youtube.com/embed/${videoId}`
+      }
+      else {
+        return null
+      }
+    },
   },
+
   methods: {
+    // 평점 클릭하는 method
     onClick: function () {
       const data = {
         movie: this.selectedMovieDetail.id,
@@ -106,6 +137,24 @@ export default {
     margin: 300px 100px;
   }
 
+  /* 유튜브 관련 스타일 적용 */
+  .video-container {
+    position: relative;   /* iframe을 container를 기준으로 위치를 지정 */
+    padding-top: 56.25%;  /*유튜브 비디오 비율을 맞추기 위한 높이 설정 */
+    border-color: #DDC6B6;
+  }
 
+  .video-container > iframe {
+  position: absolute;   /* container를 기준으로 위치를 지정*/
+  top: 0px;
+  left: 10em;
+  width: 80%;
+  height: 80%;
+  border-radius: 15px;
+  }
+
+  i {
+    color: #FFD662;
+  }
 
 </style>
