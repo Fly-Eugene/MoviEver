@@ -15,6 +15,17 @@
         <BoardTable v-for="review in review_list" :key="review.id" :review="review"/>
       </table>
     </div>
+
+    <!-- <div class="btn-cover">
+      <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+        이전
+      </button>
+      <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">
+        다음
+      </button>
+    </div> -->
+
     <!-- <div class="d-flex justify-content-center" >
       <nav aria-label="Page navigation example">
         <ul class="pagination">
@@ -34,6 +45,7 @@
         </ul>
       </nav>
     </div> -->
+
   </div>
 </template>
 

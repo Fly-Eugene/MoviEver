@@ -113,6 +113,7 @@ export default {
   created: function () {
     this.$store.commit('CHANGE_ISLOGIN')
     this.$store.dispatch('getMovie')
+    this.$store.dispatch('getNowPlayingMovie')
     this.$store.dispatch('getReviews')
     this.$store.dispatch('getRatedMovies')
     

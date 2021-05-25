@@ -41,45 +41,67 @@ def get_request(url):
     return res
 
 
+def add_movie(movie_item, now_playing=False):
+    movie = Movie()
+    if Movie.objects.filter(title=movie_item['title']).exists():
+        return
+    movie.title = movie_item['title']
+    if movie_item.get('release_date', None) == None:
+        movie.release_date = '1900-01-01'
+    else:
+        movie.release_date = movie_item['release_date']
+    movie.vote_count = movie_item['vote_count']
+    movie.vote_average = movie_item['vote_average']
+    movie.overview = movie_item['overview']
+    movie.poster_path = movie_item['poster_path']
+    if now_playing == True:
+        movie.now_playing = True
+    movie.save()
+    # 장르 id 목록을 받아온 후 genres에 저장한다.
+    # genre_id와 같은 값을 가진 Genre 객체를 찾아 movie에 더해준다.
+    genres = movie_item['genre_ids']
+    for genre in genres:
+        movie_genre = Genre.objects.filter(idx=genre)[0]
+        movie.genres.add(movie_genre)
+
+
 @api_view(['GET'])
 def get_movie(request):
     raw_movie_list = [] # 불러온 영화 JSON을 저장할 리스트
+    now_playing_movie_list = []
     get_genre() # Genre를 생성하는 함수
 
     # page 1~5까지 반복하면서 요청을 보내고 받아온 요청을 raw_movie_list에 저장한다.
     for i in range(1,6):
         res = get_request(get_url(page=i))['results']
         raw_movie_list += res
+    
+    res = get_request(get_url(feature='now_playing', region='KR'))['results']
+    now_playing_movie_list += res
 
     # 저장된 영화를 하나씩 반복하면서 영화 객체를 생성한다.
     # 각각의 항목에 맞게 값을 넣어주고 movie id를 생성하기 위해 저장한다.
+    for movie_item in now_playing_movie_list:
+        add_movie(movie_item, True)
     for movie_item in raw_movie_list:
-        movie = Movie()
-        movie.title = movie_item['title']
-        if movie_item.get('release_date', None) == None:
-            movie.release_date = '1900-01-01'
-        else:
-            movie.release_date = movie_item['release_date']
-        movie.vote_count = movie_item['vote_count']
-        movie.vote_average = movie_item['vote_average']
-        movie.overview = movie_item['overview']
-        movie.poster_path = movie_item['poster_path']
-        movie.save()
-        # 장르 id 목록을 받아온 후 genres에 저장한다.
-        # genre_id와 같은 값을 가진 Genre 객체를 찾아 movie에 더해준다.
-        genres = movie_item['genre_ids']
-        for genre in genres:
-            movie_genre = Genre.objects.filter(idx=genre)[0]
-            movie.genres.add(movie_genre)
+        add_movie(movie_item)
+        
     # 데이터를 반환해주는 부분
     movie_list = Movie.objects.all()
     serializer = MovieSerializer(movie_list, many=True)
     return Response(serializer.data)
-    
+
 
 @api_view(['GET'])
 def print_movie(request):
     # 데이터를 반환해주는 부분
     movie_list = Movie.objects.all()
+    serializer = MovieSerializer(movie_list, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def print_now_playing_movie(request):
+    movie_list = Movie.objects.filter(now_playing=True)
     serializer = MovieSerializer(movie_list, many=True)
     return Response(serializer.data)
