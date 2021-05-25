@@ -58,8 +58,13 @@
 
       </div>
     </nav>
+    
+    <transition name="slide-fade" mode="out-in"> 
+      <router-view /> 
+    </transition>
 
-    <router-view/>
+
+
     <!-- Movie Info -->
     <div class="modal fade" id="movieInfoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog modal-fullscreen">
@@ -174,5 +179,18 @@ export default {
 .navbar {
   background-color: #262223;
 }
+
+/* 라우터 이동시 구현 */
+.slide-fade-enter { transform: translateX(10px); opacity: 0; } 
+.slide-fade-enter-active, .slide-fade-leave-active { transition: all 0.3s ease; } 
+.slide-fade-leave-to { transform: translateX(-10px); opacity: 0; }
+
+/* 뷰 생성시 구현 */
+.v-enter { /* starting style */ opacity: 0; } 
+.v-enter-active { /* active entering style */ transition: opacity 2s ease-in; } 
+.v-leave-active { /* active leaving style */ transition: opacity 2s ease-out; } 
+.v-leave-to { /* ending style */ opacity: 0; }
+
+
 
 </style>

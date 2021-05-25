@@ -148,3 +148,5 @@ CORS_ALLOWED_ORIGINS = [
 JWT_AUTH = {
  'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
 }
+
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S' 

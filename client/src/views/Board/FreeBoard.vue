@@ -10,41 +10,26 @@
             <th scope="col">#</th>
             <th scope="col">제목</th>
             <th scope="col">작성자</th>
+            <th scope="col">작성 시간</th>
           </tr>
         </thead>
-        <BoardTable v-for="review in review_list" :key="review.id" :review="review"/>
+        <BoardTable v-for="review in paginatedData" :key="review.id" :review="review"/>
       </table>
+
+      <div>
+        <div class="btn-cover text-center">
+          <button :disabled="pageNum === 0" @click="prevPage" class="page-btn btn">
+            이전
+          </button>
+          <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+          <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn btn">
+            다음
+          </button>
+        </div>
+      </div>
+
     </div>
 
-    <!-- <div class="btn-cover">
-      <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
-        이전
-      </button>
-      <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
-      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">
-        다음
-      </button>
-    </div> -->
-
-    <!-- <div class="d-flex justify-content-center" >
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div> -->
 
   </div>
 </template>
@@ -58,16 +43,44 @@ export default {
   components: {
     BoardTable,
   },
-
+  data: function () {
+    return {
+      pageNum: 0,
+    }
+  },
   methods: {
     onCreate: function() {
       this.$router.push({name: 'FreeBoardCreate'})
+    },
+    // 페이지네이션
+    nextPage () {
+      this.pageNum += 1;
+    },
+    prevPage () {
+      this.pageNum -= 1;
     }
   },
 
 
   computed: {
-    ...mapState(['review_list'])
+    ...mapState(['review_list']),
+    pageCount () {
+      let listLeng = this.review_list.length,
+          listSize = 10,
+          page = Math.floor(listLeng / listSize);
+      if (listLeng % listSize > 0) page += 1;
+      
+      /*
+      아니면 page = Math.floor((listLeng - 1) / listSize) + 1;
+      이런식으로 if 문 없이 고칠 수도 있다!
+      */
+      return page;
+    },
+    paginatedData () {
+      const start = this.pageNum * 10,
+            end = start + 10;
+      return this.review_list.slice(start, end);
+    }
   }
 
 }

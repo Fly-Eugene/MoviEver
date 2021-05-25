@@ -1,9 +1,10 @@
 <template>
   <tbody>
-    <tr class="table-light">
+    <tr class="table-secondary">
       <th scope="row">{{ review.id }}</th>
       <td id="tabletd" @click="onReviewDetail(review)">{{ review.title }}</td>
       <td>{{ review.user['username'] }}</td>
+      <td>{{ review.created_at }}</td>
     </tr>
   </tbody>
 </template>
@@ -31,4 +32,5 @@ export default {
 #tabletd {
   cursor: pointer;
 }
+
 </style>
