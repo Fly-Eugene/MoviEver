@@ -1,13 +1,21 @@
 <template>
-  <div class="carousel-item">
+
+  <img :src="POSTER_URL" class="d-block w-100 carousel-item" alt="...">
+
+  <!-- <div class="carousel-item">
     <img :src="POSTER_URL" class="d-block w-100" alt="...">
-  </div>
+  </div> -->
+
 </template>
 
 <script>
+import { Glide, GlideSlide } from 'vue-glide-js'
+
 export default {
   name: 'Carousel',
   components: {
+    [Glide.name]: Glide,
+    [GlideSlide.name]: GlideSlide
   },
   data: function() {
     return {
@@ -26,7 +34,9 @@ export default {
 <style>
 .carousel-item{
   width: 400px;
-  height: 500px;
+  height: 650px;
   padding: 10px;
 }
+
+
 </style>
