@@ -267,6 +267,7 @@ export default new Vuex.Store({
 
     selectMovie: async function (context, res) {
        context.commit('SELECT_MOVIE', res)
+       await context.dispatch('onYoutube', context.state.selectedMovieDetail.title)
        await context.dispatch('getMyRate')
     },
 

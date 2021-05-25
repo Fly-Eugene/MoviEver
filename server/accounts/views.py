@@ -104,7 +104,7 @@ def dummy(request):
         Dummy.save()
     return Response(status=status.HTTP_201_CREATED)
 
-
+## 🚩admin 페이지 redirect 시켜주기
 def manager(request):
     return redirect('http://127.0.0.1:8000/admin/')
 

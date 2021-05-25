@@ -129,6 +129,7 @@ export default {
   },
 
   methods: {
+    // 🚩 Manger을 클릭하면 django로 axios 요청 보내기 !!
     onManager: function() {
       axios({
         method: 'get',
@@ -136,6 +137,8 @@ export default {
       })
       .then(res => {
         console.log(res)
+        // django admin 페이지로
+        // location.href 사용하기
       })
     },
     
@@ -155,7 +158,7 @@ export default {
 
 <style>
 #app {
-  font-family: "Lobster Two", Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Padauk', "Lobster Two", 'Sunflower', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #DDC6B6;
