@@ -9,15 +9,47 @@
         </datalist>
     </div>
     
-    <div v-if="selectedMovieRecommend">
-      
+    <div class="container">
+
+      <div v-if="selectedMovieRecommend" class="row">
+        <div class="card bg-dark text-white col-4" v-for="movie of selectedMovieRecommend" :key="movie.id">
+          <div id='test' v-show="isMouse" @mouseenter="isMouseEnter" @mouseout="isMouseOut">
+            <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="100rem" height="500rem">
+            <div class="card-img-overlay">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{ movie.vote_average }}</p>
+              <p class="card-text">{{ movie.overview }}</p>
+            </div>
+          </div>
+          <div v-show="!isMouse" @mouseenter="isMouseEnter" @mouseout="isMouseOut">
+            <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="100rem" height="500rem">
+          </div>
+        </div>
+
+          
+      </div>
+      <div v-else>
+        <div class="container text-center">
+          <div class="row">
+            <div class="col fs-2">
+              <hr>
+              이 페이지는 영화 추천 페이지 입니다.
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col fs-5">
+              평소에 재미있게 봤던 영화나 좋아하는 영화를 고르시면 <br>
+              사용자들의 평점을 통해 분석하여 선택한 영화와 비슷한 영화를 추천해 드립니다. <br>
+              영화를 선택해 주세요!
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
-    <div v-else>
-      <p v-for="movie of selectedMovieRecommend" :key="movie.id">
-        <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" class="img-fluid" alt="poster_path">  
-        {{ movie.title }}
-      </p>
-    </div>
+        
 
   </div>
 </template>
@@ -30,6 +62,7 @@ export default {
   data: function () {
     return {
       movieTitle: null,
+      isMouse: false,
     }
   },
   computed: {
@@ -42,14 +75,25 @@ export default {
       }
       else {this.$store.dispatch('selectRecommendMovie', this.movieTitle)}
       this.movieTitle = null
+    },
+    isMouseEnter: function () {
+      this.isMouse = true
+    },
+    isMouseOut: function () {
+      this.isMouse = false
     }
   },
   created: function () {
-    
+    this.$store.commit('DELETE_RECOMMEND_MOVIE')
   }
 }
 </script>
 
 <style>
-
+  #test {
+    transition: margin 2s;
+  }
+  #test:hover {
+    filter: brightness(50%);
+  }
 </style>

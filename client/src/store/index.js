@@ -18,6 +18,7 @@ export default new Vuex.Store({
     // recommend_lst: [],
     selectedMovieDetail: null,
     selectedMovieRecommend: '',
+    selectedRating: '평점이 없습니다.',
     
     jwtHeader: ''
 
@@ -41,6 +42,7 @@ export default new Vuex.Store({
 
     SELECT_MOVIE: function (state, res) {
       state.selectedMovieDetail = res
+      
     },
     
     GET_COMMENTS: function(state, res) {
@@ -70,7 +72,11 @@ export default new Vuex.Store({
 
     DELETE_SELECT_DETAIL: function (state) {
       state.selectedMovieDetail = null
-    }
+    },
+
+    DELETE_RECOMMEND_MOVIE: function (state) {
+      state.selectedMovieRecommend = ''
+    },
 
   },
   
@@ -224,6 +230,11 @@ export default new Vuex.Store({
       })
     },
 
+    selectMovie: async function (context, res) {
+       context.commit('SELECT_MOVIE', res)
+       await context.dispatch('getMyRate')
+    },
+
     ratingMovie: function (context, ratingData) {
       context.dispatch('setToken')
       axios({
@@ -237,6 +248,7 @@ export default new Vuex.Store({
         console.log(res.data)
         // actions 내에서 actions를 실행하고 싶을 땐 이렇게!
         context.dispatch('getRatedMovies')
+        
       })
       .catch( err => {
         console.log(err)
@@ -254,10 +266,21 @@ export default new Vuex.Store({
       })
       .then( res => {
         context.state.rated_movie_lst = res.data
+        context.dispatch('getMyRate')
       })
       .catch( err => {
         console.log(err);
       })
+    },
+
+    getMyRate: function (context) {
+      for (const movie of context.state.rated_movie_lst) {
+        if ( context.state.selectedMovieDetail.id === movie.movie) {
+          context.state.selectedRating = movie.rating
+          return
+        }
+      }
+      context.state.selectedRating = '평점이 없습니다.'
     },
 
     getRecommendation: function (context, id) {
