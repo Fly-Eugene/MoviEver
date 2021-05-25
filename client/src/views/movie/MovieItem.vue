@@ -1,5 +1,5 @@
 <template>
-  <div class="card col-4 m-3 " data-bs-backdrop="true" style="width: 18rem; height: 38rem;">
+  <div class="card col-4 m-3" data-bs-backdrop="true" style="width: 18rem; height: 38rem;">
     <img :src="`https://image.tmdb.org/t/p/w500${this.movie.poster_path}`" class="card-img-top" alt="#" width="150rem" height="400em">
     <div class="card-body">
       <h5 class="card-title" >{{ movie.title }}</h5>
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     onMovieInfo: function () {
-      this.$store.commit('SELECT_MOVIE', this.movie)
+      this.$store.dispatch('selectMovie', this.movie)
     }
   },
   // Search Bar 함수 추가

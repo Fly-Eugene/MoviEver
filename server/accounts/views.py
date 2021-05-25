@@ -74,14 +74,23 @@ def cf_algo(request, movie_id):
     item_based_collabor = cosine_similarity(movie_user_rating)
     item_based_collabor = pd.DataFrame(data = item_based_collabor, index=movie_user_rating.index, columns=movie_user_rating.index)
     
-    df_list = item_based_collabor[movie_id].sort_values(ascending=False)[1:6]
+    df_list = item_based_collabor[movie_id].sort_values(ascending=False)[1:7]
     df_index = list(df_list.index.values)
     return Response(df_index)
 
 
 @api_view(['GET'])
+def dummy_user(request):
+    User = get_user_model()
+    seeder = Seed.seeder()
+    seeder.add_entity(User, 10)
+    seeder.execute()
+    return Response(status=status.HTTP_201_CREATED)
+    
+
+@api_view(['GET'])
 def dummy(request):
-    for _ in range(100):
+    for _ in range(500):
         User = get_user_model()
         random_movie = Movie.objects.order_by("?")[0]
         random_user = User.objects.order_by("?").first()
@@ -90,6 +99,8 @@ def dummy(request):
         Dummy.user = random_user
         Dummy.movie = random_movie
         Dummy.rating = rating
+        if LikeMovie.objects.filter(user=random_user, movie=random_movie).exists():
+            continue
         Dummy.save()
     return Response(status=status.HTTP_201_CREATED)
 

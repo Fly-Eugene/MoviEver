@@ -119,7 +119,6 @@ export default {
   },
   computed: {
     ...mapState(['movie_list', 'selectedMovieDetail', 'server_url', 'isLogin'])
-
   },
 
   methods: {

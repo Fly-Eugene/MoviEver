@@ -20,8 +20,10 @@
               <option value="4">Four</option>
               <option value="5">Five</option>
             </select>
-          <button @click="onClick" class="btn">작성</button>
-          평점: {{ movieRating }}
+          <button @click="onClick" class="btn btn-outline-secondary">작성</button>
+        </p>
+        <p>
+          평점: {{ selectedRating }}
         </p>
         <p class="fs-4">
           vote_average: {{ selectedMovieDetail.vote_average }}
@@ -56,19 +58,19 @@
 
 import { mapState } from 'vuex'
 
+
 export default {
   name: 'MovieInfo',
   data: function () {
     return {
       rating: 0,
-      movieRating: '평점이 없습니다.'
     }
   },
   components: {
     
   },
   computed: {
-    ...mapState(['selectedMovieDetail', 'rated_movie_lst'])
+    ...mapState(['selectedMovieDetail', 'rated_movie_lst', 'selectedRating'])
   },
   methods: {
     onClick: function () {
@@ -77,19 +79,11 @@ export default {
         rating: this.rating
       }
       this.$store.dispatch('ratingMovie', data)
-      this.updateRating()
+      this.rating = 0
     },
-    updateRating: function() {
-      for (let movie of this.rated_movie_lst) {
-        if (movie.movie === this.selectedMovieDetail.id) {
-          this.movieRating = movie.rating
-        }
-      }
-    }
+  
+    
   },
-  created: function() {
-      this.updateRating()
-    }
   
 }
 </script>

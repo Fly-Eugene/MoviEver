@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <!-- Carousel 시작 -->
+
     <!-- <div class='d-flex justify-content-center'>
 
       <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="true" data-bs-interval="false">
@@ -141,7 +142,5 @@ body {
 .input-group{
   padding: 10px 50px;
 }
-
-
 
 </style>
