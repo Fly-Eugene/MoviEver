@@ -23,8 +23,11 @@
             </select>
           <button @click="onClick" class="btn btn-outline-secondary">작성</button>
         </p>
-        <div v-if="selectedRating == '평점이 없습니다.'">
+        <div v-if="selectedRating == 0">
           평점: 평점을 등록해보세요
+        </div>
+        <div v-if="selectedRating == -1">
+          평점: 로그인을 해주세요
         </div>
         <div v-if="selectedRating == 1">
           평점: <i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
@@ -68,7 +71,7 @@
     
     <!-- 유튜브 영상 표시하기 -->
     <div v-if='videoURI' class="container">
-      <div class="video-container">
+      <div class="video-container col-9 ms-4">
         <iframe id="ytplayer" :src="videoURI" type="text/html"> </iframe>
       </div>
     </div>

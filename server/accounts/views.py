@@ -54,10 +54,14 @@ def like_movie(request):
         if serializer.is_valid(raise_exception=True):
             if LikeMovie.objects.filter(movie_id=request.data['movie'], user_id=request.user.id).exists():
                 like_movie = LikeMovie.objects.filter(movie_id=request.data['movie'], user_id=request.user.id)[0]
-                like_movie.rating = request.data['rating']
-                like_movie.save()
+                if request.data['rating'] == 0:
+                    like_movie.delete()
+                else:
+                    like_movie.rating = request.data['rating']
+                    like_movie.save()
             else:
-                serializer.save(user=request.user)
+                if request.data['rating'] != 0:
+                    serializer.save(user=request.user)
     else:
         like_movies = LikeMovie.objects.filter(user_id=request.user.id)
         serializer = LikeMovieSerializer(like_movies, many=True)

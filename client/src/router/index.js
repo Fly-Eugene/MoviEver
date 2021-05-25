@@ -2,15 +2,16 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 // 현재, Home, 회원가입, 로그인 라우터 생성했습니다.
-import Home from '../views/Home.vue'
+import Home from '../views/Home'
 import Signup from '@/views/accounts/Signup'
 import Login from '@/views/accounts/Login'
 import Movie from '@/views/movie/Movie'
-import Recommendation from '@/views/Recommendation/Recommendation.vue'
+import Recommendation from '@/views/Recommendation/Recommendation'
 import FreeBoard from '@/views/Board/FreeBoard'
 import FreeBoardCreate from '@/views/Board/FreeBoardCreate'
 import FreeBoardDetail from '@/views/Board/FreeBoardItem'
 import FreeBoardUpdate from '@/views/Board/FreeBoardUpdate'
+import MapApp from '@/views/map/MapApp'
 
 Vue.use(VueRouter)
 
@@ -69,7 +70,12 @@ const routes = [
     component: FreeBoardUpdate,
     props: true
   },
-
+  // 지도
+  {
+    path: '/MapApp',
+    name: 'MapApp',
+    component: MapApp,
+  }
 ]
 
 const router = new VueRouter({
