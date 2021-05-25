@@ -18,6 +18,9 @@ export default new Vuex.Store({
     selectedMovieDetail: null,
     selectedMovieRecommend: '',
     selectedRating: '평점이 없습니다.',
+
+    //Youtube 영상 저장?
+    youtube : '',
     
     jwtHeader: '',
     isLogin: false
@@ -88,6 +91,10 @@ export default new Vuex.Store({
       state.selectedMovieRecommend = ''
     },
 
+    GET_YOUTUBE: function(state, res) {
+      state.youtube = res
+    }
+
   },
   
   actions: {
@@ -101,7 +108,6 @@ export default new Vuex.Store({
       })
       .then(res => {
         console.log(res)
-        context.commit('LOGIN')
         router.push({ name: 'Login' })
       })
       .catch(err => {
@@ -320,6 +326,33 @@ export default new Vuex.Store({
       }
       context.dispatch('getRecommendation', selectMovieId)
       
+
+    },
+
+    onYoutube: function(context, movie_title) {
+      const query = movie_title + ' trailer'
+      const API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+      const API_URL = 'https://www.googleapis.com/youtube/v3/search'
+
+      const params = {
+        key: API_KEY,
+        part: 'snippet',
+        type: 'video',
+        q: query,
+      }
+
+      axios({
+        url: API_URL,
+        method: 'GET',
+        params,
+      })
+      .then( res => {
+        console.log(res.data.items[0])
+        context.commit('GET_YOUTUBE', res.data.items[0])   // 맨 첫번째 영상 하나만 받아오기
+      })
+      .catch( err => {
+        console.log(err)
+      })
 
     },
 

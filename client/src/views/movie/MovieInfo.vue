@@ -1,5 +1,8 @@
 <template>
   <div v-if="selectedMovieDetail">
+    <div>
+      <button @click="$store.dispatch('onYoutube', selectedMovieDetail.title)">Youtube</button>
+    </div>
     <div class="row container">
       <div class="col-4">
         <img :src="`https://image.tmdb.org/t/p/w500${this.selectedMovieDetail.poster_path}`" class="img-fluid" alt="poster_path">  
