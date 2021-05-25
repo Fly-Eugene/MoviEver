@@ -1,18 +1,8 @@
 <template>
   <div class="home">
-
-    <div class="input-group mb-3">
-      <input v-model="searchMovie" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2" >
-      <!-- Search Bar 함수 추가 -->
-      <button @click="onSearch" class="btn btn-outline-secondary" id="MovieInfoBtn" type="button" data-bs-toggle="modal" data-bs-target="#movieInfoModal">Search</button>
-        <datalist id="dataList">
-          <option v-for="movie of movie_list" :key="movie.id" :value="movie.title" ></option>
-        </datalist>
-    </div>
-
     <!-- Carousel 시작 -->
 
-    <div class='d-flex justify-content-center'>
+    <!-- <div class='d-flex justify-content-center'>
 
       <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="true" data-bs-interval="false">
         <div class="carousel-inner">
@@ -31,7 +21,21 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-    </div>
+    </div> -->
+
+    <vue-glide v-model="active">
+
+      <vue-glide-slide v-for="movie in movie_list" :key="movie.id">
+        <div>
+          <Carousel :movie="movie"/>
+        </div>
+      </vue-glide-slide>
+    
+      <!-- <template slot="control">
+        <button data-glide-dir="<">prev</button>
+        <button data-glide-dir=">">next</button>
+      </template> -->
+    </vue-glide>
 
     <div class="swiper-button-prev outer-arrow" role="button" @click="onRecommendation">
       <i class="fas fa-chevron-left fa-3x"></i>
@@ -52,15 +56,21 @@
 import { mapState } from 'vuex'
 import Carousel from '@/components/Carousel.vue'
 
+import { Glide, GlideSlide } from 'vue-glide-js'
+
 export default {
   name: 'Home',
   components: {
-    Carousel
+    Carousel,
+    [Glide.name]: Glide,
+    [GlideSlide.name]: GlideSlide
   },
+
   data: function() {
     return {
       URL_HEAD : 'https://image.tmdb.org/t/p/w500/',
-      searchMovie: ''
+      searchMovie: '',
+      active: 4 
     }
   },
 
@@ -80,10 +90,6 @@ export default {
         alert('로그인이 필요한 페이지 입니다.')
         this.$router.push({name : 'Login'})
       }
-    },
-    onSearch: function () {
-      this.$store.commit('SEARCH_MOVIE', this.searchMovie)
-      this.searchMovie = ''
     },
     onRecommendation: function () {
       if (this.isLogin) {
@@ -134,8 +140,7 @@ body {
 }
 
 .input-group{
-  padding: 10px 100px;
+  padding: 10px 50px;
 }
-
 
 </style>

@@ -43,6 +43,18 @@
             </ul>            
           </div>
         </div>
+
+        <!-- Navbar에 searchbar를 만들었습니다. -->
+        <div>
+          <div class="input-group mb-2">
+            <input v-model="searchMovie" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2" >
+            <!-- Search Bar 함수 추가 -->
+            <button @click="onSearch" class="btn btn-outline-secondary" id="MovieInfoBtn" type="button" data-bs-toggle="modal" data-bs-target="#movieInfoModal">Search</button>
+              <datalist id="dataList">
+                <option v-for="movie of movie_list" :key="movie.id" :value="movie.title" ></option>
+              </datalist>
+          </div>
+        </div>
       </div>
     </nav>
 
@@ -92,7 +104,7 @@ import axios from 'axios'
 export default {
   data: function () {
     return {
-      
+      searchMovie: ''
     }
   },
   components:{
@@ -106,7 +118,7 @@ export default {
     
   },
   computed: {
-    ...mapState(['selectedMovieDetail','server_url', 'isLogin'])
+    ...mapState(['movie_list', 'selectedMovieDetail', 'server_url', 'isLogin'])
   },
 
   methods: {
@@ -122,7 +134,13 @@ export default {
     
     onClose: function () {
       this.$store.commit('DELETE_SELECT_DETAIL')
-    }
+    },
+
+    onSearch: function () {
+      this.$store.commit('SEARCH_MOVIE', this.searchMovie)
+      this.searchMovie = ''
+    },
+
   }
   
 }
