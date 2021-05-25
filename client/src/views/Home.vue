@@ -23,8 +23,8 @@
       </div>
     </div> -->
 
-    <vue-glide v-model="active">
-
+    <vue-glide v-model="active" v-if="now_playing_movie_list.length > 5">
+      
       <vue-glide-slide v-for="movie of now_playing_movie_list" :key="movie.id">
         <div>
           <Carousel :movie="movie"/>
@@ -70,7 +70,7 @@ export default {
     return {
       URL_HEAD : 'https://image.tmdb.org/t/p/w500/',
       searchMovie: '',
-      active: 4 ,
+      active: 0 ,
     }
   },
 
