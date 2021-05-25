@@ -23,9 +23,9 @@
       <img src="../../../../logo.png" alt="" id="loginImg">
     </div>
     <div class="container d-flex justify-content-center">
-      <form>
+      <form @submit="onSubmit">
         <div class="mb-4">
-          <input size='50' placeholder="ID" type="email" id="idInput" v-model="credentials.username">
+          <input size='50' placeholder="ID" type="text" id="idInput" v-model="credentials.username">
           <div id="emailHelp" class="form-text">We'll never share your ID with anyone else.</div>
         </div>
         <div class="mb-4">
@@ -35,7 +35,7 @@
           <input placeholder="PasswordConfirmation" type="password" id="passwordConfirmationInput" v-model="credentials.passwordConfirmation">
         </div>
 
-        <button class="btn" id="signupbtn" @click="$store.dispatch('signup', credentials)">회원가입</button>
+        <button class="btn" id="signupbtn">회원가입</button>
       </form>
     </div>
   </div>
@@ -57,6 +57,13 @@ export default {
       }
     }
   },
+
+  methods: {
+    onSubmit: function(event) {
+      event.preventDefault()
+      this.$store.dispatch('signup', this.credentials)
+    }
+  }
 
 }
 </script>

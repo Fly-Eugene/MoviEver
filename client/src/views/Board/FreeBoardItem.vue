@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div class="content freeBoardItem">
+    <div id="boardTitle" class="content freeBoardItem">
       <div class="ps-3 pt-3">
         <h3>{{ this.review.title }}</h3>
+        <p>작성자 : {{ review.user['username'] }}</p>
         <p>게시글 생성일: {{ this.review.created_at }} </p>
       </div>
       <hr>
@@ -132,6 +133,11 @@ export default {
 #boardContent {
   height: 200px;
   margin: 15px;
+  color: black;
+}
+
+#boardTitle {
+  color: black;
 }
 
 .boardBtn {

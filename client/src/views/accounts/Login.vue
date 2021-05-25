@@ -20,17 +20,15 @@
       <img src="../../../../logo.png" alt="" id="loginImg">
     </div>
     <div class="container d-flex justify-content-center">
-      <form>
+      <form @submit="onSubmit">
         <div class="mb-4">
-          <!-- <label for="exampleInputEmail1" class="form-label">ID</label> -->
-          <input size='50' placeholder="ID" type="email" id="idInput" v-model="credentials.username">
-          <div id="emailHelp" class="form-text">We'll never share your ID with anyone else.</div>
+          <input placeholder="ID" class="form-control" type="text" id="idInput" v-model="credentials.username">
+          <div class="form-text">We'll never share your ID with anyone else.</div>
         </div>
         <div class="mb-4">
-          <!-- <label for="exampleInputPassword1" class="form-label">Password</label> -->
-          <input placeholder="Password" type="password" id="passwordInput" v-model="credentials.password">
+          <input placeholder="Password" class="form-control" type="password" id="passwordInput" v-model="credentials.password">
         </div>
-        <button class="btn" id="loginbtn" @click="$store.dispatch('login', credentials)">로그인</button>
+        <button class="btn" id="loginbtn">로그인</button>
       </form>
     </div>
   </div>
@@ -52,6 +50,10 @@ export default {
     }
   },
   methods: {
+    onSubmit: function(event) {
+      event.preventDefault()
+      this.$store.dispatch('login', this.credentials)
+    }
   }
 }
 </script>

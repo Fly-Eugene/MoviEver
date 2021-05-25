@@ -3,7 +3,7 @@
     <tr class="table-light">
       <th scope="row">{{ review.id }}</th>
       <td id="tabletd" @click="onReviewDetail(review)">{{ review.title }}</td>
-      <td>Otto</td>
+      <td>{{ review.user['username'] }}</td>
     </tr>
   </tbody>
 </template>
