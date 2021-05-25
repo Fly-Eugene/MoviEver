@@ -11,23 +11,42 @@
     
     <div class="container">
 
-      <div v-if="selectedMovieRecommend" class="row">
-        <div class="card bg-dark text-white col-4" v-for="movie of selectedMovieRecommend" :key="movie.id">
-          <div id='test' v-show="isMouse" @mouseenter="isMouseEnter" @mouseout="isMouseOut">
-            <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="100rem" height="500rem">
-            <div class="card-img-overlay">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.vote_average }}</p>
-              <p class="card-text">{{ movie.overview }}</p>
+      <div v-if="selectedMovieRecommend" class="row" id="upper-row">
+        <div id='hover-card' v-for="movie of selectedMovieRecommend.slice(0,3)" :key="movie.id" class="col-4">
+          <div id='top-img' class="card bg-dark text-white " >
+            <div>
+              <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
+              <div class="card-img-overlay">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text">{{ movie.vote_average }}</p>
+                <p class="card-text">{{ movie.overview }}</p>
+              </div>
             </div>
           </div>
-          <div v-show="!isMouse" @mouseenter="isMouseEnter" @mouseout="isMouseOut">
-            <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="100rem" height="500rem">
-          </div>
+            <div id='bottom-img'>
+              <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
+            </div>
         </div>
-
-          
       </div>
+
+      <div v-if="selectedMovieRecommend" class="row">
+        <div id='hover-card' v-for="movie of selectedMovieRecommend.slice(3,6)" :key="movie.id" class="col-4">
+          <div id='top-img' class="card bg-dark text-white " >
+            <div>
+              <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
+              <div class="card-img-overlay">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text">{{ movie.vote_average }}</p>
+                <p class="card-text">{{ movie.overview }}</p>
+              </div>
+            </div>
+          </div>
+            <div id='bottom-img'>
+              <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
+            </div>
+        </div>
+      </div>
+
       <div v-else>
         <div class="container text-center">
           <div class="row">
@@ -61,7 +80,6 @@ export default {
   data: function () {
     return {
       movieTitle: null,
-      isMouse: false,
     }
   },
   computed: {
@@ -75,12 +93,6 @@ export default {
       else {this.$store.dispatch('selectRecommendMovie', this.movieTitle)}
       this.movieTitle = null
     },
-    isMouseEnter: function () {
-      this.isMouse = true
-    },
-    isMouseOut: function () {
-      this.isMouse = false
-    }
   },
   created: function () {
     this.$store.commit('DELETE_RECOMMEND_MOVIE')
@@ -89,10 +101,25 @@ export default {
 </script>
 
 <style>
-  #test {
-    transition: margin 2s;
+  #hover-card {
+    position: relative;
   }
-  #test:hover {
+
+  #top-img{
     filter: brightness(50%);
+    position: absolute;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  #bottom-img {
+    transition: .5s;
+    position: absolute;
+  }
+  #bottom-img:hover {
+    transform: translate(-100%);
+    
+  }
+  #upper-row {
+    margin-bottom: 32em;
   }
 </style>

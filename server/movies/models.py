@@ -13,3 +13,4 @@ class Movie(models.Model):
     overview = models.TextField()
     poster_path = models.CharField(max_length=200)
     genres = models.ManyToManyField(Genre)
+    now_playing = models.BooleanField(default=False)

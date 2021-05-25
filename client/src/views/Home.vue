@@ -25,7 +25,7 @@
 
     <vue-glide v-model="active">
 
-      <vue-glide-slide v-for="movie in movie_list" :key="movie.id">
+      <vue-glide-slide v-for="movie of now_playing_movie_list" :key="movie.id">
         <div>
           <Carousel :movie="movie"/>
         </div>
@@ -56,26 +56,26 @@
 import { mapState } from 'vuex'
 import Carousel from '@/components/Carousel.vue'
 
-import { Glide, GlideSlide } from 'vue-glide-js'
+// import { Glide, GlideSlide } from 'vue-glide-js'
 
 export default {
   name: 'Home',
   components: {
     Carousel,
-    [Glide.name]: Glide,
-    [GlideSlide.name]: GlideSlide
+    // [Glide.name]: Glide,
+    // [GlideSlide.name]: GlideSlide
   },
 
   data: function() {
     return {
       URL_HEAD : 'https://image.tmdb.org/t/p/w500/',
       searchMovie: '',
-      active: 4 
+      active: 4 ,
     }
   },
 
   computed: {
-    ...mapState(['movie_list', 'selectedMovieDetail', 'isLogin'])
+    ...mapState(['movie_list', 'selectedMovieDetail', 'isLogin', 'now_playing_movie_list'])
 
   },
   methods: {
@@ -100,7 +100,7 @@ export default {
         this.$router.push({name : 'Login'})
       }
     }
-  }
+  },
 }
 
 </script>

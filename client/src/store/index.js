@@ -10,6 +10,7 @@ export default new Vuex.Store({
     // server_url을 변수로 저장했습니다.
     server_url: 'http://127.0.0.1:8000/',
     movie_list: [],
+    now_playing_movie_list: [],
     review_list: [],
     rated_movie_lst: [],
     
@@ -35,7 +36,11 @@ export default new Vuex.Store({
     },
 
     GET_MOVIE: function(state, res) {
-      state.movie_list = res['data']
+      state.movie_list = res.data
+    },
+
+    GET_NOW_PLAYING_MOVIE: function(state, res) {
+      state.now_playing_movie_list = res.data
     },
 
     GET_REVIEWS: function(state, res) {
@@ -140,14 +145,25 @@ export default new Vuex.Store({
     },
 
     getMovie: function (context) {
-      context.dispatch('setToken')
       axios({
         method: 'get',
         url: this.state.server_url + 'movies/print_movie/',
-        headers: context.state.jwtHeader
       })
       .then(res => {
         context.commit('GET_MOVIE', res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+    getNowPlayingMovie: function (context) {
+      axios({
+        method: 'get',
+        url: this.state.server_url + 'movies/print_now_playing_movie/',
+      })
+      .then(res => {
+        context.commit('GET_NOW_PLAYING_MOVIE', res)
       })
       .catch(err => {
         console.log(err)
