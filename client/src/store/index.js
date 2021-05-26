@@ -396,6 +396,18 @@ export default new Vuex.Store({
       context.state.jwtHeader = config
     },
 
+    kakaoLogin: function() {
+      const kakao_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+      const kakao_API_URL = 
+
+      axios({
+        method: 'get',
+
+
+
+      })
+    }
+
   },
   
     getters: {

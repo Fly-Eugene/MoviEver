@@ -47,6 +47,10 @@
       <i class="fas fa-chevron-down fa-3x"></i>
     </div>
 
+    <div>
+      <button @click="$store.dispatch('kakaoLogin')">카카오 로그인 버튼</button>
+    </div>
+
   </div>
   
 </template>
