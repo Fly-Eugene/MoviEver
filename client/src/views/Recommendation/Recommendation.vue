@@ -6,7 +6,7 @@
     </div>
 
     <div class="input-group mb-3">
-      <input v-model="movieTitle" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2">
+      <input v-model="movieTitle" type="text" id="searchBarRecommend" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2">
       <!-- Search Bar 함수 추가 -->
       <button @click="onRecommend" class="btn btn-outline-secondary" type="button" id="button-addon2">Select</button>
         <datalist id="dataList">
@@ -17,38 +17,54 @@
     <div class="container">
 
       <div v-if="selectedMovieRecommend" class="row" id="upper-row">
-        <div id='hover-card' v-for="movie of selectedMovieRecommend.slice(0,3)" :key="movie.id" class="col-4">
-          <div id='top-img' class="card bg-dark text-white " >
-            <div>
-              <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
-              <div class="card-img-overlay">
-                <h5 class="card-title">{{ movie.title }}</h5>
-                <p class="card-text">{{ movie.vote_average }}</p>
-                <p class="card-text">{{ movie.overview }}</p>
+          <div v-for="movie of selectedMovieRecommend.slice(0,3)" :key="movie.id" class="col-4">
+            <div id='hover-card'>
+              <div id='top-img' class="card bg-dark text-white " >
+                <div>
+                  <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem" style="filter: brightness(50%);">
+                  <div class="card-img-overlay">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">Average Rate: {{ movie.vote_average }}</p>
+                    <p class="card-text">{{ movie.overview }}</p>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button @click="onRecommendClick(movie)" id="MovieInfoBtn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#movieInfoModal">
+                    Detail
+                  </button>
+                </div>
               </div>
-            </div>
+                <div id='bottom-img'>
+                  <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
+                </div>
+
           </div>
-            <div id='bottom-img'>
-              <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
-            </div>
         </div>
       </div>
 
       <div v-if="selectedMovieRecommend" class="row">
-        <div id='hover-card' v-for="movie of selectedMovieRecommend.slice(3,6)" :key="movie.id" class="col-4">
-          <div id='top-img' class="card bg-dark text-white " >
-            <div>
-              <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
-              <div class="card-img-overlay">
-                <h5 class="card-title">{{ movie.title }}</h5>
-                <p class="card-text">{{ movie.vote_average }}</p>
-                <p class="card-text">{{ movie.overview }}</p>
+        <div v-for="movie of selectedMovieRecommend.slice(3,6)" :key="movie.id" class="col-4">
+            <div id='hover-card'>
+              <div id='top-img' class="card bg-dark text-white " >
+                <div>
+                  <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem" style="filter: brightness(50%);">
+                  <div class="card-img-overlay">
+                    <h5 class="card-title">{{ movie.title }}</h5>
+                    <p class="card-text">Average Rate: {{ movie.vote_average }}</p>
+                    <p class="card-text">{{ movie.overview }}</p>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button @click="onRecommendClick(movie)" id="MovieInfoBtn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#movieInfoModal">
+                    Detail
+                  </button>
+                </div>
               </div>
-            </div>
+                <div id='bottom-img'>
+                  <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
+                </div>
+
           </div>
-            <div id='bottom-img'>
-              <img class="card-img" :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Card image" width="10px" height="500rem">
-            </div>
         </div>
       </div>
 
@@ -98,6 +114,9 @@ export default {
       else {this.$store.dispatch('selectRecommendMovie', this.movieTitle)}
       this.movieTitle = null
     },
+    onRecommendClick: function (movie) {
+      this.$store.dispatch('selectMovie', movie)
+    }
   },
   created: function () {
     this.$store.commit('DELETE_RECOMMEND_MOVIE')
@@ -108,10 +127,11 @@ export default {
 <style>
   #hover-card {
     position: relative;
+    
   }
 
   #top-img{
-    filter: brightness(50%);
+    /* filter: brightness(50%); */
     position: absolute;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -120,9 +140,8 @@ export default {
     transition: .5s;
     position: absolute;
   }
-  #bottom-img:hover {
+  #hover-card:hover > #bottom-img {
     transform: translate(-100%);
-    
   }
   #upper-row {
     margin-bottom: 32em;

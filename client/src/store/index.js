@@ -181,6 +181,26 @@ export default new Vuex.Store({
       router.push({ name: 'Home' })
     },
 
+    getadminPage: function (context) {
+      context.dispatch('setToken')
+      axios({
+        method: 'get',
+        url: context.state.server_url + 'accounts/manager/',
+        headers: context.state.jwtHeader
+      })
+      .then( res => {
+        console.log(res)
+        if (res.status === 200) {
+          location.href = context.state.server_url+'admin/'
+        }
+      })
+      .catch( err => {
+        console.log(err)
+        alert('허가되지 않은 사용자 입니다.')
+        
+      })
+    },
+
     getMovie: function (context) {
       axios({
         method: 'get',
@@ -277,10 +297,10 @@ export default new Vuex.Store({
       .then(res => {
         console.log(res)
         context.dispatch('getComments', review_id)
-        router.push({ name: 'FreeBoardDetail', params: {id: review_id}})
       })
       .catch(err => {
         console.log(err)
+        alert('댓글을 입력해주세요!')
       })
     },
     
