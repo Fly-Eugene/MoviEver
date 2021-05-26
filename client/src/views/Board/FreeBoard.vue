@@ -102,6 +102,7 @@ span {
 
 #createBoardBtn {
   margin: 20px;
+  color: #262223;
   background-color: #DDC6B6;
   font-size: 18px;
   font-weight: bold;

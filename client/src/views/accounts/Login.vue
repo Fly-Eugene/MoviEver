@@ -29,7 +29,12 @@
           <input placeholder="Password" class="form-control" type="password" id="passwordInput" v-model="credentials.password">
         </div>
         <button class="btn" id="loginbtn">로그인</button>
+        <div class="mt-3">
+          <a :href="kakao_URL"><img src="@/assets/kakao_login.png" alt=""></a>
+        </div>
       </form>
+    </div>
+    <div>
     </div>
   </div>
 </template>
@@ -46,7 +51,8 @@ export default {
       credentials: {
         username: null,
         password: null,
-      }
+      },
+      kakao_URL : `https://kauth.kakao.com/oauth/authorize?client_id=0ba410c0f796197638aeaf933efde905&redirect_uri=http://localhost:8080/&response_type=code`
     }
   },
   methods: {
@@ -54,7 +60,8 @@ export default {
       event.preventDefault()
       this.$store.dispatch('login', this.credentials)
     }
-  }
+  },
+  
 }
 </script>
 

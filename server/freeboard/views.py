@@ -89,3 +89,26 @@ def comment(request, review_pk):
             ## 두 개 모두 save 할 때 넣기 위해서 ',' 로 연결해주었습니다.
             serializer.save(user=request.user, review = review)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+@api_view(['PUT', 'DELETE'])
+@authentication_classes([JSONWebTokenAuthentication])       # JWT가 유효한지 체크
+@permission_classes([IsAuthenticated])
+def comment_detail(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+
+    # 해당 유저만 삭제 또는 수정이 가능하도록 한다.
+    if not request.user.comment_set.filter(pk=comment_pk).exists():
+        return Response({'detail' : '권한이 없습니다'}, status=status.HTTP_403_FORBIDDEN)
+    
+    # 수정할 때
+    if request.method == 'PUT':
+        serializer = CommentSerializer(comment, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
+
+    # 삭제할 때
+    elif request.method == 'DELETE':
+        comment.delete()
+        return Response({ 'id': comment_pk }, status=status.HTTP_204_NO_CONTENT)

@@ -27,6 +27,10 @@
               <li class="nav-item">
                 <span @click="onManager">Manager</span>|
               </li>
+              <li class="nav-item ps-3">
+                <p class="m-0">{{now_user}}님, 안녕하세요</p>
+              </li>
+              
             </ul>
           </div>
           <div v-else>
@@ -126,10 +130,11 @@ export default {
     this.$store.dispatch('getNowPlayingMovie')
     this.$store.dispatch('getReviews')
     this.$store.dispatch('getRatedMovies')
+    this.$store.commit('SAVE_USER')
     
   },
   computed: {
-    ...mapState(['movie_list', 'selectedMovieDetail', 'server_url', 'isLogin'])
+    ...mapState(['movie_list', 'selectedMovieDetail', 'server_url', 'isLogin', 'now_user'])
   },
 
   methods: {
@@ -177,6 +182,13 @@ export default {
 .navbar {
   background-color: #262223;
 }
+
+.nav-item{
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
 
 /* 라우터 이동시 구현 */
 .slide-fade-enter { transform: translateX(10px); opacity: 0; } 
