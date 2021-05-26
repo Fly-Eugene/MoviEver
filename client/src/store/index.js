@@ -116,6 +116,7 @@ export default new Vuex.Store({
         router.push({ name: 'Login' })
       })
       .catch(err => {
+        alert('ID와 PASSWORD를 확인해 주세요')
         console.log(err)
       })
     },
@@ -137,6 +138,7 @@ export default new Vuex.Store({
         router.push({ name: 'Home'})
       })
       .catch(err => {
+        alert('ID와 PASSWORD를 확인해 주세요')
         console.log(err)
       })
     },
@@ -424,21 +426,6 @@ export default new Vuex.Store({
       }
       context.state.jwtHeader = config
     },
-
-    // kakaoLogin: function() {
-    //   const kakao_API_KEY = process.env.VUE_APP_KAKAO_API_KEY
-
-    //   axios({
-    //     method: 'get',
-    //     url: `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_API_KEY}&redirect_uri=http://localhost:8080/&response_type=code`,
-    //   })
-    //   .then(res => {
-    //     console.log('여기는 axios 성공', res.data)
-    //   })
-    //   .catch(err => {
-    //     console.log('여기는 axios 실패', err)
-    //   })
-    // }
 
   },
   
