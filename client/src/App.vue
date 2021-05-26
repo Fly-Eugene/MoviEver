@@ -9,7 +9,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
           <div v-if="isLogin">
             <ul class="navbar-nav">
               <li class="nav-item">
@@ -20,6 +20,9 @@
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'Movie' }">Movie</router-link> |
+              </li>
+              <li class="nav-item">
+                <router-link :to="{ name: 'MapApp' }">Map</router-link> |
               </li>
               <li class="nav-item">
                 <a href="http://127.0.0.1:8000/admin/">Manager</a> |
@@ -38,32 +41,34 @@
                 <router-link :to="{ name: 'Login' }">Login</router-link> |
               </li>
               <li class="nav-item">
+                <router-link :to="{ name: 'MapApp' }">Map</router-link> |
+              </li>
+              <li class="nav-item">
                 <span @click="onManager">Manager</span>|
               </li>
             </ul>            
           </div>
-        </div>
-
-        <!-- Navbar에 searchbar를 만들었습니다. -->
-        <div>
-          <div class="input-group mb-2">
-            <input v-model="searchMovie" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2" >
-            <!-- Search Bar 함수 추가 -->
-            <button @click="onSearch" class="btn btn-outline-secondary" id="MovieInfoBtn" type="button" data-bs-toggle="modal" data-bs-target="#movieInfoModal">Search</button>
-              <datalist id="dataList">
-                <option v-for="movie of movie_list" :key="movie.id" :value="movie.title" ></option>
-              </datalist>
+          <!-- Navbar에 searchbar를 만들었습니다. -->
+          <div>
+            <div class="input-group mb-2 ">
+              <input v-model="searchMovie" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2" >
+              <!-- Search Bar 함수 추가 -->
+              <button @click="onSearch" class="btn btn-outline-secondary" id="MovieInfoBtn" type="button" data-bs-toggle="modal" data-bs-target="#movieInfoModal">Search</button>
+                <datalist id="dataList">
+                  <option v-for="movie of movie_list" :key="movie.id" :value="movie.title" ></option>
+                </datalist>
+            </div>
           </div>
         </div>
+
 
       </div>
     </nav>
     
+    <!-- 여기는 router-view -->
     <transition name="slide-fade" mode="out-in"> 
       <router-view /> 
     </transition>
-
-
 
     <!-- Movie Info -->
     <div class="modal fade" id="movieInfoModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -100,6 +105,7 @@
     
   </div>
 </template>
+
 
 <script>
 import MovieInfo from '@/views/movie/MovieInfo.vue'

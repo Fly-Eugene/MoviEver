@@ -18,7 +18,7 @@ export default new Vuex.Store({
     comment_list: [],
     selectedMovieDetail: null,
     selectedMovieRecommend: '',
-    selectedRating: '평점이 없습니다.',
+    selectedRating: 0,
 
     //Youtube 영상 저장?
     youtube : '',
@@ -195,6 +195,9 @@ export default new Vuex.Store({
       },
     
     getReviews: function(context) {
+      if (localStorage.getItem('jwt') === null) {
+        return
+      }
       context.dispatch('setToken')
       axios({
         method: 'get',
@@ -272,6 +275,7 @@ export default new Vuex.Store({
     },
 
     ratingMovie: function (context, ratingData) {
+      
       context.dispatch('setToken')
       axios({
         method: 'post',
@@ -287,11 +291,16 @@ export default new Vuex.Store({
         
       })
       .catch( err => {
+        alert('로그인을 해주세요!')
         console.log(err)
+        
       })
     },
     
     getRatedMovies: function (context) {
+      if (localStorage.getItem('jwt') === null) {
+        return
+      }
       context.dispatch('setToken')
       axios({
         method: 'get',
@@ -301,8 +310,10 @@ export default new Vuex.Store({
         },
       })
       .then( res => {
-        context.state.rated_movie_lst = res.data
-        context.dispatch('getMyRate')
+        context.state.rated_movie_lst = res.data  
+        if (context.state.selectedMovieDetail !== null) {
+          context.dispatch('getMyRate')
+        }
       })
       .catch( err => {
         console.log(err);
@@ -310,13 +321,17 @@ export default new Vuex.Store({
     },
 
     getMyRate: function (context) {
+      if (localStorage.getItem('jwt') === null) {
+        context.state.selectedRating = -1
+        return
+      }
       for (const movie of context.state.rated_movie_lst) {
         if ( context.state.selectedMovieDetail.id === movie.movie) {
           context.state.selectedRating = movie.rating
           return
         }
       }
-      context.state.selectedRating = '평점이 없습니다.'
+      context.state.selectedRating = 0
     },
 
     getRecommendation: function (context, id) {
