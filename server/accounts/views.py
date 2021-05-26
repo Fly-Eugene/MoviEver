@@ -108,7 +108,14 @@ def dummy(request):
         Dummy.save()
     return Response(status=status.HTTP_201_CREATED)
 
+
 ## 🚩admin 페이지 redirect 시켜주기
+@api_view(['GET'])
+@authentication_classes([JSONWebTokenAuthentication])       # JWT가 유효한지 체크
+@permission_classes([IsAuthenticated])  
 def manager(request):
-    return redirect('http://127.0.0.1:8000/admin/')
+    if request.user.is_superuser == True:
+        return Response(status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_403_FORBIDDEN)
 

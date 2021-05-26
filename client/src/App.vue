@@ -25,7 +25,7 @@
                 <router-link :to="{ name: 'MapApp' }">Map</router-link> |
               </li>
               <li class="nav-item">
-                <a href="http://127.0.0.1:8000/admin/">Manager</a> |
+                <span @click="onManager">Manager</span>|
               </li>
             </ul>
           </div>
@@ -134,7 +134,7 @@ export default {
 
   methods: {
     onManager: function() {
-      location.href = `${this.server_url}admin/`
+      this.$store.dispatch('getadminPage')
     },
     
     onClose: function () {

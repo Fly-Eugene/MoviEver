@@ -13,6 +13,8 @@ export default new Vuex.Store({
     now_playing_movie_list: [],
     review_list: [],
     rated_movie_lst: [],
+    selectGenre: 1,
+    
     
     //comment_list 추가
     comment_list: [],
@@ -98,6 +100,10 @@ export default new Vuex.Store({
 
     GET_YOUTUBE: function(state, res) {
       state.youtube = res
+    },
+
+    CHANGE_SELECT: function(state, res) {
+      state.selectGenre = res
     }
 
   },
@@ -179,6 +185,26 @@ export default new Vuex.Store({
 
       context.commit('CHANGE_ISLOGIN')
       router.push({ name: 'Home' })
+    },
+
+    getadminPage: function (context) {
+      context.dispatch('setToken')
+      axios({
+        method: 'get',
+        url: context.state.server_url + 'accounts/manager/',
+        headers: context.state.jwtHeader
+      })
+      .then( res => {
+        console.log(res)
+        if (res.status === 200) {
+          location.href = context.state.server_url+'admin/'
+        }
+      })
+      .catch( err => {
+        console.log(err)
+        alert('허가되지 않은 사용자 입니다.')
+        
+      })
     },
 
     getMovie: function (context) {
@@ -277,10 +303,10 @@ export default new Vuex.Store({
       .then(res => {
         console.log(res)
         context.dispatch('getComments', review_id)
-        router.push({ name: 'FreeBoardDetail', params: {id: review_id}})
       })
       .catch(err => {
         console.log(err)
+        alert('댓글을 입력해주세요!')
       })
     },
     
@@ -430,7 +456,91 @@ export default new Vuex.Store({
   },
   
     getters: {
-   
+      selectedMovieList: function (state) {
+        let genreMovieList = []
+        if (Number(state.selectGenre) === 1) {
+          genreMovieList = state.movie_list
+        }
+        else if (Number(state.selectGenre) === -6) {
+          for (const movie of state.movie_list) {
+            for (const rated_movie of state.rated_movie_lst){
+              if (movie.id === rated_movie.movie) {
+                genreMovieList.push(movie)
+                continue
+              }
+            }
+          }
+        }
+        else if (Number(state.selectGenre) === -5) {
+          for (const movie of state.movie_list) {
+            for (const rated_movie of state.rated_movie_lst){
+              if (movie.id === rated_movie.movie && rated_movie.rating === 5) {
+                genreMovieList.push(movie)
+                continue
+              }
+            }
+          }
+        }
+        else if (Number(state.selectGenre) === -4) {
+          for (const movie of state.movie_list) {
+            for (const rated_movie of state.rated_movie_lst){
+              if (movie.id === rated_movie.movie && rated_movie.rating === 4) {
+                genreMovieList.push(movie)
+                continue
+              }
+            }
+          }
+        }
+        else if (Number(state.selectGenre) === -3) {
+          for (const movie of state.movie_list) {
+            for (const rated_movie of state.rated_movie_lst){
+              if (movie.id === rated_movie.movie && rated_movie.rating === 3) {
+                genreMovieList.push(movie)
+                continue
+              }
+            }
+          }
+        }
+        else if (Number(state.selectGenre) === -2) {
+          for (const movie of state.movie_list) {
+            for (const rated_movie of state.rated_movie_lst){
+              if (movie.id === rated_movie.movie && rated_movie.rating === 2) {
+                genreMovieList.push(movie)
+                continue
+              }
+            }
+          }
+        }
+        else if (Number(state.selectGenre) === -1) {
+          for (const movie of state.movie_list) {
+            for (const rated_movie of state.rated_movie_lst){
+              if (movie.id === rated_movie.movie && rated_movie.rating === 1) {
+                genreMovieList.push(movie)
+                continue
+              }
+            }
+          }
+        }
+        else if (Number(state.selectGenre) === -7) {
+          for (const movie of state.movie_list) {
+            if (movie.now_playing === true) {
+              genreMovieList.push(movie)
+              continue
+            }
+          }
+        }
+        else {  
+          for (const movie of state.movie_list) {
+            for (const genre of movie.genres) {
+              if (Number(state.selectGenre) === genre.idx){
+                genreMovieList.push(movie)
+                continue
+              }
+            }
+          }
+        }
+        return genreMovieList
+      }
     },
     
   modules: {
