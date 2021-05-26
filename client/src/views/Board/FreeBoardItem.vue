@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div>
+      <i id="backBoardIcon" class="fas fa-arrow-left fa-1x"></i>
+      <button class="btn" id="backBoard" @click="backToBoard">뒤로가기</button>
+    </div>
     <div id="boardTitle" class="content freeBoardItem">
       <div class="ps-3 pt-3">
         <h3>{{ this.review.title }}</h3>
@@ -20,7 +24,7 @@
     <hr>
     <p class="m-3" id="boardCommentLogo">댓글</p>
     <!-- 댓글 목록 -->
-    <Comments v-for="comment in comment_list" :key="comment.id" :comment="comment"/>
+    <Comments v-for="comment in comment_list" :key="comment.id" :comment="comment" :review_id="review.id"/>
     <!-- 댓글 input -->
     <div class="m-2">
       <!-- <input type="text" v-model="new_comment"> -->
@@ -63,15 +67,13 @@ export default {
         url: this.server_url + `freeboard/${review.id}/validation/`,
         headers: this.jwtHeader
       })
-      .then(res => {
-        console.log(res.data)
+      .then(() => {
         axios({
           method: 'delete',
           url: this.server_url + `freeboard/${review.id}/`,
           headers: this.jwtHeader
         })
-        .then(res => {
-          console.log('여기는 FreeBoardItem.vue', res.data)
+        .then(() => {
           this.$store.dispatch('getReviews')
           this.$router.push({ name: 'FreeBoard' })
         })
@@ -106,6 +108,10 @@ export default {
     onClick: function(){
       this.$store.dispatch('createComment', [this.review.id, this.new_comment])
       this.new_comment = ''
+    },
+
+    backToBoard: function() {
+      this.$router.push({name : 'FreeBoard'})
     }
   },
 
@@ -150,6 +156,19 @@ export default {
 #boardCommentLogo {
   color: white;
   font-size: 20px;
+}
+
+#saveBoardBtn {
+  color: #262223;
+}
+
+#backBoard {
+  color: white;
+  font-size: 18px;
+}
+
+#backBoardIcon {
+  color: white;
 }
 
 </style>
