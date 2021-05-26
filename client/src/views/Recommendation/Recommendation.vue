@@ -1,5 +1,10 @@
 <template>
+
   <div>
+    <div class="d-flex justify-content-center">
+      <img src="@/assets/recommend.png" alt="" id="recommend_img">
+    </div>
+
     <div class="input-group mb-3">
       <input v-model="movieTitle" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2">
       <!-- Search Bar 함수 추가 -->
@@ -122,4 +127,11 @@ export default {
   #upper-row {
     margin-bottom: 32em;
   }
+
+  #recommend_img{
+    width: 500px;
+    height: 150px;
+  }
+
+
 </style>

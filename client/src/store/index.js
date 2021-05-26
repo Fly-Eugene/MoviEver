@@ -141,6 +141,35 @@ export default new Vuex.Store({
       })
     },
 
+    kakaoToken: function(context, kakao_code) {
+      console.log('axios 요청 보내기 전', kakao_code)
+      axios({
+        method: 'post',
+        url: 'https://kauth.kakao.com/oauth/token',
+        params: {
+          grant_type : 'authorization_code',
+          client_id : '0ba410c0f796197638aeaf933efde905',
+          redirect_uri : 'http://localhost:8080/',
+          code: kakao_code
+        },
+        headers: {
+          'Content-type' : 'application/x-www-form-urlencoded;charset=utf-8',
+          'Authorization' : '2a1cc18718a524a24be72d1663639061'
+        }
+      })
+      .then(res => {
+        console.log(res.data)
+        localStorage.setItem('jwt', res.data.access_token)
+        context.dispatch('setToken')
+
+        context.commit('CHANGE_ISLOGIN')
+        router.push({ name: 'Home'})
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
     // logout은 loacalStorage에 있는 jwt 토큰을 삭제하면서 Home 화면으로 이동합니다.
     logout: function (context) {
       localStorage.removeItem('jwt')
@@ -396,17 +425,20 @@ export default new Vuex.Store({
       context.state.jwtHeader = config
     },
 
-    kakaoLogin: function() {
-      const kakao_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
-      const kakao_API_URL = 
+    // kakaoLogin: function() {
+    //   const kakao_API_KEY = process.env.VUE_APP_KAKAO_API_KEY
 
-      axios({
-        method: 'get',
-
-
-
-      })
-    }
+    //   axios({
+    //     method: 'get',
+    //     url: `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_API_KEY}&redirect_uri=http://localhost:8080/&response_type=code`,
+    //   })
+    //   .then(res => {
+    //     console.log('여기는 axios 성공', res.data)
+    //   })
+    //   .catch(err => {
+    //     console.log('여기는 axios 실패', err)
+    //   })
+    // }
 
   },
   
