@@ -13,6 +13,8 @@ export default new Vuex.Store({
     now_playing_movie_list: [],
     review_list: [],
     rated_movie_lst: [],
+    selectGenre: -1,
+    
     
     //comment_list 추가
     comment_list: [],
@@ -98,6 +100,10 @@ export default new Vuex.Store({
 
     GET_YOUTUBE: function(state, res) {
       state.youtube = res
+    },
+
+    CHANGE_SELECT: function(state, res) {
+      state.selectGenre = res
     }
 
   },
@@ -450,7 +456,34 @@ export default new Vuex.Store({
   },
   
     getters: {
-   
+      selectedMovieList: function (state) {
+        let genreMovieList = []
+        if (Number(state.selectGenre) === 1) {
+          genreMovieList = state.movie_list
+        }
+        else if (Number(state.selectGenre) === -1) {
+          for (const movie of state.movie_list) {
+            for (const rated_movie of state.rated_movie_lst){
+              if (movie.id === rated_movie.movie) {
+                console.log(movie.id);
+                genreMovieList.push(movie)
+                continue
+              }
+            }
+          }
+        }
+        else {  
+          for (const movie of state.movie_list) {
+            for (const genre of movie.genres) {
+              if (Number(state.selectGenre) === genre.idx){
+                genreMovieList.push(movie)
+                continue
+              }
+            }
+          }
+        }
+        return genreMovieList
+      }
     },
     
   modules: {
