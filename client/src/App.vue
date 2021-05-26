@@ -130,6 +130,7 @@ export default {
     this.$store.dispatch('getNowPlayingMovie')
     this.$store.dispatch('getReviews')
     this.$store.dispatch('getRatedMovies')
+    this.$store.commit('SAVE_USER')
     
   },
   computed: {

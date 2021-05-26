@@ -104,9 +104,8 @@ export default new Vuex.Store({
     },
 
     // 지금 username 저장하기
-    SAVE_USER: function(state, user) {
-      console.log(user)
-      state.now_user = user
+    SAVE_USER: function(state) {
+      state.now_user = localStorage.getItem('user_name')
     }
 
   },
@@ -138,7 +137,9 @@ export default new Vuex.Store({
         data: credentials,
       })
       .then(res => {
-        context.commit('SAVE_USER', res.config.data.split(/[:|,]/)[1])
+        localStorage.setItem('user_name', res.config.data.split(/[:|,]/)[1])
+        context.commit('SAVE_USER')
+
         localStorage.setItem('jwt', res.data.token)
         context.dispatch('setToken')
 
@@ -183,6 +184,7 @@ export default new Vuex.Store({
     // logout은 loacalStorage에 있는 jwt 토큰을 삭제하면서 Home 화면으로 이동합니다.
     logout: function (context) {
       localStorage.removeItem('jwt')
+      localStorage.removeItem('user_name')
       context.dispatch('setToken')
 
       context.commit('CHANGE_ISLOGIN')
