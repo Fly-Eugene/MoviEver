@@ -116,6 +116,7 @@ export default new Vuex.Store({
         router.push({ name: 'Login' })
       })
       .catch(err => {
+        alert('ID와 PASSWORD를 확인해 주세요')
         console.log(err)
       })
     },
@@ -137,6 +138,7 @@ export default new Vuex.Store({
         router.push({ name: 'Home'})
       })
       .catch(err => {
+        alert('ID와 PASSWORD를 확인해 주세요')
         console.log(err)
       })
     },
@@ -397,8 +399,8 @@ export default new Vuex.Store({
     },
 
     kakaoLogin: function() {
-      const kakao_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
-      const kakao_API_URL = 
+      // const kakao_API_KEY = process.env.VUE_APP_YOUTUBE_API_KEY
+      // const kakao_API_URL = 
 
       axios({
         method: 'get',

@@ -110,8 +110,6 @@
 <script>
 import MovieInfo from '@/views/movie/MovieInfo.vue'
 import {mapState} from 'vuex'
-import axios from 'axios'
-
 
 export default {
   data: function () {
@@ -135,17 +133,8 @@ export default {
   },
 
   methods: {
-    // 🚩 Manger을 클릭하면 django로 axios 요청 보내기 !!
     onManager: function() {
-      axios({
-        method: 'get',
-        url: this.server_url + 'accounts/manager/'
-      })
-      .then(res => {
-        console.log(res)
-        // django admin 페이지로
-        // location.href 사용하기
-      })
+      location.href = `${this.server_url}admin/`
     },
     
     onClose: function () {
