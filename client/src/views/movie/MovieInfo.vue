@@ -7,15 +7,16 @@
       </div>
       <div class="col-8 text-start mt-5">
         <p class="fs-1">
-          Title: {{ selectedMovieDetail.title }}
+          <span class="lobstar-title">Title: </span>
+          <span>{{ selectedMovieDetail.title }}</span>
         </p>
         <hr>
 
         <p class="fs-5 ">
           
           <label for="rating" class="fs-5">Select Your Rate</label>
-            <select class="form-select" aria-label="Default select example" v-model="rating" aria-placeholder="Select your Rate">
-              <option value="1" >One</option>
+            <select class="form-select" aria-label="Default select example" v-model="rating" aria-placeholder="Select your Rate" >
+              <option value="1">One</option>
               <option value="2">Two</option>
               <option value="3">Three</option>
               <option value="4">Four</option>
@@ -62,7 +63,7 @@
         </p>
         <hr>
         <div>
-          <p class="fs-3">overview</p>
+          <p class="fs-3 overview">overview</p>
           <p>{{ selectedMovieDetail.overview }}</p>
         </div>
         <hr>
@@ -158,6 +159,13 @@ export default {
 
   i {
     color: #FFD662;
+  }
+
+  .lobstar-title {
+    font-family: "Lobster Two";
+  }
+  .overview {
+    font-family: "Lobster Two";
   }
 
 </style>

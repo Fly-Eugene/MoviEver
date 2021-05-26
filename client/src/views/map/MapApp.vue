@@ -1,7 +1,8 @@
 <template>
 	<div class="container">
-		<!-- 로고 -->
-		<!-- <img src="../../../../logo.png" width="200em" height="100em" alt="" class=""> -->
+		<div class="d-flex justify-content-center">
+			<img src="@/assets/map.png" alt="" width="200em" height="100em" >
+		</div>
 		<div class="map_wrap">
 				<div id="map" style="width:100%;height:135%;overflow:hidden;"></div>
 
