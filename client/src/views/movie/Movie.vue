@@ -4,7 +4,13 @@
     <label for="selectedGenre" class="fs-5">Select Your Genre</label>
       <select @change="changeSelect" class="form-select" aria-label="Default select example" v-model="selectedGenre" aria-placeholder="Select your Rate" id="selectedGenre">
         <option value=1>ALL</option>
-        <option value=-1>MyRating</option>
+        <option value=-7>Now Playing</option>
+        <option value=-1>MyRatedMovie - 1</option>
+        <option value=-2>MyRatedMovie - 2</option>
+        <option value=-3>MyRatedMovie - 3</option>
+        <option value=-4>MyRatedMovie - 4</option>
+        <option value=-5>MyRatedMovie - 5</option>
+        <option value=-6>MyRatedMovie - ALL</option>
         <option value=28 >Action</option>
         <option value=12>Adventure</option>
         <option value=16>Animation</option>
@@ -26,9 +32,15 @@
         <option value=37>Western</option>
       </select>
 
-    <div class="row">
+    <div class="row" v-if="selectedMovieList.length > 0">
       <MovieItem v-for="movie in selectedMovieList" :key="movie.id" :movie="movie" />
-
+    </div>
+    <div v-else class='d-flex justify-content-center mt-5' >
+      
+      <h2><hr>
+        영화 목록이 존재하지 않습니다.
+        <hr></h2>
+      
     </div>
   </div>
 </template>
