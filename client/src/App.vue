@@ -5,7 +5,7 @@
     <!-- navbar-light bg-light -->
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container-fluid">
-        <router-link class="navbar-brand" to="/"><img src="../../logo.png" alt="" width="120" height="40"></router-link>
+        <router-link class="navbar-brand" to="/"><img src="@/assets/logo.png" alt="" width="120" height="40"></router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

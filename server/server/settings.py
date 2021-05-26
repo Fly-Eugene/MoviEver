@@ -143,6 +143,9 @@ AUTH_USER_MODEL = 'accounts.User'
 CORS_ALLOWED_ORIGINS = [
     
     "http://localhost:8080",
+    "https://accounts.kakao.com",
+    "https://kauth.kakao.com"
+
 ]
 
 JWT_AUTH = {

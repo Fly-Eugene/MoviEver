@@ -48,7 +48,7 @@
     </div>
 
     <div>
-      <button @click="$store.dispatch('kakaoLogin')">카카오 로그인 버튼</button>
+      <button><a :href="kakao_URL">카카오 로그인 버튼</a></button>
     </div>
 
   </div>
@@ -75,6 +75,8 @@ export default {
       URL_HEAD : 'https://image.tmdb.org/t/p/w500/',
       searchMovie: '',
       active: 0 ,
+      // kakao_API_KEY : "0ba410c0f796197638aeaf933efde905",
+      kakao_URL : `https://kauth.kakao.com/oauth/authorize?client_id=0ba410c0f796197638aeaf933efde905&redirect_uri=http://localhost:8080/&response_type=code`
     }
   },
 
@@ -103,8 +105,16 @@ export default {
         alert('로그인이 필요한 페이지 입니다.')
         this.$router.push({name : 'Login'})
       }
-    }
+    },
   },
+
+  created: function (){
+    const kakao_code = location.search.split('=')[1]
+    if (kakao_code) {
+      this.$store.dispatch('kakaoToken', kakao_code)
+      // this.kakaoToken(kakao_code)
+    }
+  }
 }
 
 </script>

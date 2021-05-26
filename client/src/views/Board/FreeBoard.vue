@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="d-flex justify-content-center">
+      <img src="@/assets/community.png" alt="" id="community_img">
+    </div>
+
     <div class="d-flex justify-content-md-end">
       <button type="button" class="btn" id="createBoardBtn" @click="onCreate" >글 작성하기</button>
     </div>
@@ -103,5 +107,8 @@ span {
   font-weight: bold;
 }
 
-
+#community_img {
+  width: 400px;
+  height: 150px;
+}
 </style>

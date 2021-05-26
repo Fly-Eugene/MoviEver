@@ -19,7 +19,10 @@ import 'vue-glide-js/dist/vue-glide.css'
 // Vue.use(IconsPlugin)
 Vue.config.productionTip = false
 
-// 삽질...
+// 카카오 로그인
+// window.Kakao.init('35b881741ab48f0dfc83b0a540e11adf');
+
+// 메인 페이지 캐로우젤
 Vue.use(VueGlide)
 
 new Vue({
