@@ -91,10 +91,10 @@ export default {
   },
   
   created: function (){
-    const kakao_code = location.search.split('=')[1]
-    if (kakao_code) {
-      this.$store.dispatch('kakaoToken', kakao_code)
-    }
+    // const kakao_code = location.search.split('=')[1]
+    // if (kakao_code) {
+    //   this.$store.dispatch('kakaoToken', kakao_code)
+    // }
   }
 }
 

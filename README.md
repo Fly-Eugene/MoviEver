@@ -10,7 +10,13 @@
 
 > <img src="https://i.pinimg.com/originals/3f/6e/c4/3f6ec446dd918554f22b774dbd5927c3.png" width="80" height="80" /> <img src="https://www.django-rest-framework.org/img/logo.png" width="160" height="80" /> <img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F3pxw6%2FbtqIH40ge9k%2FnvUQQh9IM8pGkg9fK7cBm1%2Fimg.png" width="80" height="80" /> <img src="https://blog.martinwork.co.kr/images/vue/vuex.png" width="200" height="80" />     <img src="https://cdn.worldvectorlogo.com/logos/bootstrap-5-1.svg" width="80" height="80" />  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Visual_Studio_Code_1.18_icon.svg/1200px-Visual_Studio_Code_1.18_icon.svg.png" width="80" height="80" />   <img src="https://i.pinimg.com/originals/91/94/c9/9194c978fa63798b2e882e6fda5eb953.png" width="80" height="75"/>   <img src="https://mayankgroverconsultant.files.wordpress.com/2014/08/web-logos.png" width="160" height="80" />
 
+- 처음 시작시, 더미 데이터 생성 요청 주소
 
+  > http://127.0.0.1:8000/movies/get_movie/
+  >
+  > http://127.0.0.1:8000/accounts/dummy-user/
+  >
+  > http://127.0.0.1:8000/accounts/dummy/
 
 
 

@@ -132,6 +132,12 @@ export default {
     this.$store.dispatch('getRatedMovies')
     this.$store.commit('SAVE_USER')
     
+    const kakao_code = location.search.split('=')[1]
+    if (kakao_code) {
+      this.$store.dispatch('kakaoToken', kakao_code)
+    }
+
+    
   },
   computed: {
     ...mapState(['movie_list', 'selectedMovieDetail', 'server_url', 'isLogin', 'now_user'])

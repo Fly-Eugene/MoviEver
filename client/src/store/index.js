@@ -190,6 +190,10 @@ export default new Vuex.Store({
       context.dispatch('setToken')
 
       context.commit('CHANGE_ISLOGIN')
+      context.state.rated_movie_lst = []
+      if (context.state.selectGenre !== 1) {
+        context.state.selectGenre = 1
+      }
       router.push({ name: 'Home' })
     },
 
