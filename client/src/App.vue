@@ -55,7 +55,7 @@
           <!-- Navbar에 searchbar를 만들었습니다. -->
           <div>
             <div class="input-group mb-2 ">
-              <input v-model="searchMovie" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2" >
+              <input v-model="searchedMovie" type="text" id="searchBar" list="dataList" class="form-control" placeholder="영화 검색" aria-describedby="button-addon2" >
               <!-- Search Bar 함수 추가 -->
               <button @click="onSearch" class="btn btn-outline-secondary" id="MovieInfoBtn" type="button" data-bs-toggle="modal" data-bs-target="#movieInfoModal">Search</button>
                 <datalist id="dataList">
@@ -118,7 +118,7 @@ import {mapState} from 'vuex'
 export default {
   data: function () {
     return {
-      searchMovie: ''
+      searchedMovie: ''
     }
   },
   components:{
@@ -147,8 +147,8 @@ export default {
     },
 
     onSearch: function () {
-      this.$store.commit('SEARCH_MOVIE', this.searchMovie)
-      this.searchMovie = ''
+      this.$store.dispatch('searchMovie', this.searchedMovie)
+      this.searchedMovie = ''
     },
 
   }

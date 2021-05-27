@@ -84,15 +84,6 @@ export default new Vuex.Store({
       state.selectedMovieRecommend = reco_lst
     },
 
-    SEARCH_MOVIE: function (state, res) {
-      for (const movie of state.movie_list) {
-        if (movie.title === res) {
-          state.selectedMovieDetail = movie
-          
-        }
-      }
-    },
-
     DELETE_SELECT_DETAIL: function (state) {
       state.selectedMovieDetail = null
     },
@@ -462,8 +453,18 @@ export default new Vuex.Store({
       }
       context.state.jwtHeader = config
     },
+    
+    searchMovie: async function (context, res) {
+      for (const movie of context.state.movie_list) {
+        if (movie.title === res) {
+          await context.dispatch('selectMovie', movie)
+        }
+      }
+    },
 
+    // 여기가 acthions!
   },
+  
   
     getters: {
       selectedMovieList: function (state) {
@@ -550,8 +551,12 @@ export default new Vuex.Store({
           }
         }
         return genreMovieList
-      }
+      },
+
+      
+
     },
+
     
   modules: {
   }

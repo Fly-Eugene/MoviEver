@@ -141,7 +141,7 @@ export default {
     position: absolute;
   }
   #hover-card:hover > #bottom-img {
-    transform: translate(-100%);
+    transform: translate(0%, 100%);
   }
   #upper-row {
     margin-bottom: 32em;

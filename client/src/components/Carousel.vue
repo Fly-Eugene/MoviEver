@@ -1,6 +1,9 @@
 <template>
-
-  <img :src="POSTER_URL" class="d-block w-100 carousel-item" alt="...">
+  <div class="">
+    <div class="">
+      <img :src="POSTER_URL" class="d-block w-100 carousel-item" data-bs-toggle="modal" data-bs-target="#movieInfoModal" @click="onCarousel" alt="...">
+    </div>
+  </div>
 
   <!-- <div class="carousel-item">
     <img :src="POSTER_URL" class="d-block w-100" alt="...">
@@ -26,6 +29,11 @@ export default {
     movie : {
       type: Object,
     }
+  },
+  methods: {
+    onCarousel: function () {
+      this.$store.dispatch('selectMovie', this.movie)
+    }
   }
 
 }
@@ -37,6 +45,12 @@ export default {
   height: 650px;
   padding: 10px;
 }
-
+.carousel-item:hover{
+  filter: brightness(50%);
+  transform: rotate(10deg);
+  transition: .5s;
+  transition-duration: 0.5s;
+  
+}
 
 </style>
