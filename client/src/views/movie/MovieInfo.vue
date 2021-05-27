@@ -16,6 +16,7 @@
           
           <label for="rating" class="fs-5">Select Your Rate</label>
             <select class="form-select" aria-label="Default select example" v-model="rating" aria-placeholder="Select your Rate" >
+              <option value="0">--기존 평점 삭제--</option>
               <option value="1">One</option>
               <option value="2">Two</option>
               <option value="3">Three</option>

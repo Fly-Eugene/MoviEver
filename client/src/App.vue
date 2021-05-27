@@ -5,7 +5,7 @@
     <!-- navbar-light bg-light -->
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="container-fluid">
-        <router-link class="navbar-brand" to="/"><img src="@/assets/logo.png" alt="" width="120" height="40"></router-link>
+        <router-link class="navbar-brand" :to="{ name: 'Home' }"><img src="@/assets/logo.png" alt="" width="120" height="40"></router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -13,19 +13,19 @@
           <div v-if="isLogin">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <router-link to="/">Home</router-link> |
+                <router-link :to="{ name: 'Home' }" class="link text-decoration-none">Home</router-link> |
               </li>
               <li class="nav-item">
-                <router-link @click.native="$store.dispatch('logout')" to='#'>Logout</router-link> |
+                <router-link @click.native="$store.dispatch('logout')" to='#' class="link text-decoration-none" >Logout</router-link> |
               </li>
               <li class="nav-item">
-                <router-link :to="{ name: 'Movie' }">Movie</router-link> |
+                <router-link :to="{ name: 'Movie' }" class="link text-decoration-none">Movie</router-link> |
               </li>
               <li class="nav-item">
-                <router-link :to="{ name: 'MapApp' }">Map</router-link> |
+                <router-link :to="{ name: 'MapApp' }" class="link text-decoration-none">Map</router-link> |
               </li>
               <li class="nav-item">
-                <span @click="onManager">Manager</span>|
+                <span class="link fw-bold" @click="onManager">Manager</span>|
               </li>
               <li class="nav-item ps-3">
                 <p class="m-0">{{now_user}}님, 안녕하세요</p>
@@ -36,19 +36,19 @@
           <div v-else>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <router-link to="/">Home</router-link> |
+                <router-link to="/" class="link text-decoration-none">Home</router-link> |
               </li>
               <li class="nav-item">
-                <router-link :to="{ name: 'Signup' }">Singup</router-link> |
+                <router-link :to="{ name: 'Signup' }" class="link text-decoration-none">Singup</router-link> |
               </li>
               <li class="nav-item">
-                <router-link :to="{ name: 'Login' }">Login</router-link> |
+                <router-link :to="{ name: 'Login' }" class="link text-decoration-none">Login</router-link> |
               </li>
               <li class="nav-item">
-                <router-link :to="{ name: 'MapApp' }">Map</router-link> |
+                <router-link :to="{ name: 'MapApp' }" class="link text-decoration-none">Map</router-link> |
               </li>
               <li class="nav-item">
-                <span @click="onManager">Manager</span>|
+                <span @click="onManager" class="link fw-bold">Manager</span>|
               </li>
             </ul>            
           </div>
@@ -176,7 +176,8 @@ export default {
 
 #navbarNav a.router-link-exact-active {
   /* 활성화 색 바꿨어요! */
-  color: #F9EBDE;
+  /* color: #F9EBDE; */
+  color: white;
 }
 
 .navbar {
