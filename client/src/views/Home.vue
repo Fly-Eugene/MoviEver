@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <div class="d-flex justify-content-center" id="now-playing">
+      Now Playing
+    </div>
     <!-- Carousel 시작 -->
     <!---->
     <vue-glide :autoplay="2000" v-model="active" v-if="now_playing_movie_list.length > 5">
@@ -162,6 +165,11 @@ body {
 
 .input-group{
   padding: 10px 50px;
+}
+
+#now-playing {
+  font-family: 'Lobster Two';
+  font-size: 40px;
 }
 
 </style>

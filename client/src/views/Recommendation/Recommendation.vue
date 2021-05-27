@@ -29,7 +29,7 @@
                   </div>
                 </div>
                 <div class="card-footer">
-                  <button @click="onRecommendClick(movie)" id="MovieInfoBtn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#movieInfoModal">
+                  <button @click="onRecommendClick(movie)" id="MovieInfoBtn" type="button" class="btn recommned-btn" data-bs-toggle="modal" data-bs-target="#movieInfoModal">
                     Detail
                   </button>
                 </div>
@@ -55,7 +55,7 @@
                   </div>
                 </div>
                 <div class="card-footer">
-                  <button @click="onRecommendClick(movie)" id="MovieInfoBtn" type="button" class="btn" data-bs-toggle="modal" data-bs-target="#movieInfoModal">
+                  <button @click="onRecommendClick(movie)" id="MovieInfoBtn" type="button" class="btn recommned-btn" data-bs-toggle="modal" data-bs-target="#movieInfoModal">
                     Detail
                   </button>
                 </div>
@@ -150,6 +150,12 @@ export default {
   #recommend_img{
     width: 500px;
     height: 150px;
+  }
+
+  .recommned-btn{
+    font-family: 'Lobster Two';
+    background-color: #DDC6B6;
+    color: #262223;
   }
 
 

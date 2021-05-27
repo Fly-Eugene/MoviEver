@@ -140,6 +140,7 @@ export default new Vuex.Store({
         localStorage.setItem('jwt', res.data.token)
         context.dispatch('setToken')
 
+        context.dispatch('getReviews')
         context.commit('CHANGE_ISLOGIN')
         router.push({ name: 'Home'})
       })
