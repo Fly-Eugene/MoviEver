@@ -12,5 +12,8 @@ class LikeMovie(models.Model):
     user = ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField()
 
+    def __str__(self):
+        return self.movie
+
 
 

@@ -3,8 +3,8 @@ from rest_framework import fields, serializers
 from accounts.serializers import UserSerializer
 
 class ReviewSerializer(serializers.ModelSerializer):
-    created_at = serializers.DateTimeField(format="%Y년-%m월-%d일 %H시%M분%S초", required=False, read_only=True)
-    updated_at = serializers.DateTimeField(format="%Y년-%m월-%d일 %H시%M분%S초", required=False, read_only=True)
+    created_at = serializers.DateTimeField(format="%Y년-%m월-%d일 %H시%M분", required=False, read_only=True)
+    updated_at = serializers.DateTimeField(format="%Y년-%m월-%d일 %H시%M분", required=False, read_only=True)
     user = UserSerializer(read_only=True)
     class Meta:
         model = Review
@@ -12,8 +12,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         read_only_fields = ('user', )
 
 class CommentSerializer(serializers.ModelSerializer):
-    created_at = serializers.DateTimeField(format="%Y년-%m월-%d일 %H시%M분%S초", required=False, read_only=True)
-    updated_at = serializers.DateTimeField(format="%Y년-%m월-%d일 %H시%M분%S초", required=False, read_only=True)
+    created_at = serializers.DateTimeField(format="%Y년-%m월-%d일 %H시%M분", required=False, read_only=True)
+    updated_at = serializers.DateTimeField(format="%Y년-%m월-%d일 %H시%M분", required=False, read_only=True)
     user = UserSerializer(read_only=True)
     class Meta:
         model = Comment
