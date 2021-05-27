@@ -36,7 +36,7 @@
           <div v-else>
             <ul class="navbar-nav">
               <li class="nav-item">
-                <router-link to="/" class="link text-decoration-none">Home</router-link> |
+                <router-link :to="{ name: 'Home' }" class="link text-decoration-none">Home</router-link> |
               </li>
               <li class="nav-item">
                 <router-link :to="{ name: 'Signup' }" class="link text-decoration-none">Singup</router-link> |
