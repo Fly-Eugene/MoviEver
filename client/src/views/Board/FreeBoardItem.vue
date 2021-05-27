@@ -8,7 +8,7 @@
       <div class="ps-3 pt-3">
         <h3>{{ this.review.title }}</h3>
         <p>작성자 : {{ review.user['username'] }}</p>
-        <p>게시글 생성일: {{ this.review.created_at }} </p>
+        <p>게시글 수정일: {{ this.review.updated_at }} </p>
       </div>
       <hr>
       <div id="boardContent">
