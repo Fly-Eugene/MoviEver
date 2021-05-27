@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <!-- Carousel 시작 -->
+    <!---->
     <vue-glide :autoplay="2000" v-model="active" v-if="now_playing_movie_list.length > 5">
       
       <vue-glide-slide v-for="movie of now_playing_movie_list" :key="movie.id">
@@ -10,14 +11,25 @@
       </vue-glide-slide>
     </vue-glide>
 
-    <div class="swiper-button-prev outer-arrow" role="button" @click="onRecommendation">
-      <i class="fas fa-chevron-left fa-3x"></i>
+    <div class="swiper-button-down">
+      <div>더 많은 영화보기</div>
+      <i id="arrow-down" @click="onMovieDetail" class="fas fa-chevron-down fa-3x"></i>
     </div>
-    <div class="swiper-button-next outer-arrow" role="button" @click="onBoard">
-      <i class="fas fa-chevron-right fa-3x"></i>
+
+    <div class="d-flex justify-content-between m-2">
     </div>
-    <div class="swiper-button-down" @click="onMovieDetail">
-      <i class="fas fa-chevron-down fa-3x"></i>
+
+    <div class="swiper-button-prev" @click="onRecommendation">
+      <div class="swiper-icon" >
+        <i class="fas fa-grip-lines"></i>
+        추천 페이지
+      </div>
+    </div>
+    <div class="swiper-button-next" @click="onBoard">
+      <div class="swiper-icon" >
+        자유 게시판
+        <i class="fas fa-grip-lines"></i>
+      </div>
     </div>
 
   </div>
@@ -97,26 +109,55 @@ body {
 /* margin-top: -22px; */
 
 .swiper-button-prev, .swiper-button-next {
-    position: absolute;
-    top: 50%;
-    height: 44px;
-    z-index: 1;
-    cursor: pointer;
-    background-size: 27px 44px;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding-right: 20px;
-    padding-left: 20px;
-
+  /* background-color: aquamarine; */
+  position: absolute;
+  top: 0%;
+  height: 100%;
+  z-index: 1;
+  cursor: pointer;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding-right: 20px;
+  padding-left: 20px;
 }
+/* 
+.swiper-button-prev {
+  left: 10px;
+} */
 
 .swiper-button-next {
-    right: 0;
+  right: 0;
+}
+
+.swiper-button-prev:hover {
+  background-size: 100% 100%;
+  transition: .5s;
+  /* transform: translate(90%); */
+  background-color: white;
+  color: black;
+  opacity: 80%;
+}
+
+/* #3b3738 */
+
+.swiper-button-next:hover {
+  transition: .5s;
+  background-color: white;
+  color: black;
+  opacity: 80%;
+}
+
+.swiper-icon {
+  font-size: 20px;
+  margin-top: 40em;
 }
 
 .swiper-button-down{
-  cursor: pointer;
   text-align: center;
+}
+
+#arrow-down {
+  cursor: pointer;;
 }
 
 .input-group{

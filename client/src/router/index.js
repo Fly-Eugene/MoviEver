@@ -12,15 +12,22 @@ import FreeBoardCreate from '@/views/Board/FreeBoardCreate'
 import FreeBoardDetail from '@/views/Board/FreeBoardItem'
 import FreeBoardUpdate from '@/views/Board/FreeBoardUpdate'
 import MapApp from '@/views/map/MapApp'
+import Cover from '@/views/Cover'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
   },
+  {
+    path: '/',
+    name: 'Cover',
+    component: Cover
+  },
+
   {
     path: '/accounts/signup',
     name: 'Signup',
