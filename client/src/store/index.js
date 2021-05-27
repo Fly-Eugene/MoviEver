@@ -190,6 +190,12 @@ export default new Vuex.Store({
       context.dispatch('setToken')
 
       context.commit('CHANGE_ISLOGIN')
+      // 수정한 부분
+      context.state.rated_movie_lst = []
+      if (context.state.selectGenre !== 1) {
+        context.state.selectGenre = 1
+      }
+      // 수정한 부분
       router.push({ name: 'Home' })
     },
 
